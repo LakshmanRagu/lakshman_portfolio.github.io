@@ -11,7 +11,7 @@
     <!-- ========================================== -->
     <script>
         const PORTFOLIO_LINKS = {
-            // Game Links (All route to your main itch.io as per the PDF)
+             // Game Links (All route to your main itch.io as per the PDF)
             "link-welcome-back": "https://reirann.itch.io/welcome-back",
             "link-the-long-take": "https://lakshmanragu.itch.io/the-long-take",
             "link-scraping-angel": "https://reirann.itch.io/scraping-angel",
@@ -23,7 +23,7 @@
             "link-uni-projects": "https://youtu.be/Uj-wqgUHFWk",
             
             // Contact Links
-            "link-itch-io": "https://dio.itch.io", 
+            "link-itch-io": "https://lakshmanragu.itch.io/", 
             "link-email": "mailto:lakshmannarainragubathy@gmail.com",
             "link-artstation": "https://www.artstation.com/lakshmanragu", 
             // "link-github": "#"  <-- Commented out for now
@@ -46,11 +46,9 @@
                 const particle = document.createElement('div');
                 particle.className = 'ender-particle';
                 
-                // Randomize position
                 particle.style.left = Math.random() * 100 + 'vw';
                 particle.style.top = Math.random() * 100 + 'vh';
                 
-                // Randomize animation delay and duration so they look organic
                 particle.style.animationDelay = Math.random() * 5 + 's';
                 particle.style.animationDuration = (3 + Math.random() * 4) + 's';
                 
@@ -113,6 +111,32 @@
             0% { transform: translateY(0) scale(0.5); opacity: 0; }
             50% { transform: translateY(-50px) scale(1.2); opacity: 0.8; }
             100% { transform: translateY(-100px) scale(0.5); opacity: 0; }
+        }
+
+        /* --- PULSING DOTS --- */
+        .dot-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .deco-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--main-color);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 0, 127, 0.8);
+            animation: pulse 1s infinite alternate;
+        }
+
+        .deco-dot:nth-child(2) { animation-delay: 0.2s; }
+        .deco-dot:nth-child(3) { animation-delay: 0.4s; }
+        .deco-dot:nth-child(4) { animation-delay: 0.6s; }
+
+        @keyframes pulse {
+            from { opacity: 0.2; transform: scale(0.7); }
+            to { opacity: 1; transform: scale(1.3); }
         }
 
         /* --- LAYOUT & CONTAINERS --- */
@@ -181,32 +205,56 @@
             flex-wrap: wrap; 
         }
 
+        /* Upgraded Pacman Animation */
         .pacman {
-            width: 0px;
-            height: 0px;
-            border-right: 15px solid transparent;
-            border-top: 15px solid #ffcc00;
-            border-left: 15px solid #ffcc00;
-            border-bottom: 15px solid #ffcc00;
-            border-top-left-radius: 15px;
-            border-top-right-radius: 15px;
-            border-bottom-left-radius: 15px;
-            border-bottom-right-radius: 15px;
-            animation: chomp 0.5s infinite alternate;
+            position: relative;
+            width: 30px;
+            height: 30px;
+            margin: 0;
+        }
+
+        .pacman::before, .pacman::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 30px;
+            height: 15px;
+            background: #ffcc00;
+            border-radius: 30px 30px 0 0;
+            transform-origin: bottom center;
+            animation: chomp-top 0.3s ease-in-out infinite alternate;
+        }
+
+        .pacman::after {
+            top: 15px;
+            border-radius: 0 0 30px 30px;
+            transform-origin: top center;
+            animation: chomp-bottom 0.3s ease-in-out infinite alternate;
+        }
+
+        @keyframes chomp-top {
+            0% { transform: rotate(-40deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        @keyframes chomp-bottom {
+            0% { transform: rotate(40deg); }
+            100% { transform: rotate(0deg); }
         }
 
         .dot {
-            width: 6px;
-            height: 6px;
+            width: 8px;
+            height: 8px;
             background-color: var(--main-color);
             border-radius: 50%;
-            box-shadow: var(--neon-glow);
+            box-shadow: 0 0 10px rgba(255, 0, 127, 0.8);
+            animation: pulse 1s infinite alternate;
         }
 
-        @keyframes chomp {
-            0% { border-right: 15px solid transparent; }
-            100% { border-right: 15px solid #ffcc00; }
-        }
+        .arcade-animation .dot:nth-child(2) { animation-delay: 0.2s; }
+        .arcade-animation .dot:nth-child(3) { animation-delay: 0.4s; }
+        .arcade-animation .dot:nth-child(4) { animation-delay: 0.6s; }
 
         /* --- NAV BAR --- */
         .nav-bar {
@@ -429,8 +477,11 @@
 <div class="container">
 
     <header>
-        <div class="arcade-animation" style="margin-bottom: 20px;">
-            <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        <div class="dot-container">
+            <div class="deco-dot"></div>
+            <div class="deco-dot"></div>
+            <div class="deco-dot"></div>
+            <div class="deco-dot"></div>
         </div>
         <h1>LAKSHMAN NARAIN RAGUBATHY</h1>
         <!-- <div class="subtitle">GAMEPLAY PROGRAMMER • LEAD PROGRAMMER • 3D ARTIST • CS STUDENT</div> -->
@@ -518,7 +569,7 @@
 
     <div class="section-divider"></div>
 
-    <!-- GAMES -->
+     <!-- GAMES -->
     <section id="games">
         <h2 class="section-title">
             <span>📺</span> GAMES
@@ -736,6 +787,14 @@
         </h2>
         <div class="box contact-box">
             <p>READY TO TEAM UP? INSERT COIN OR CLICK BELOW.</p>
+            
+            <div class="dot-container" style="margin-top: 40px; margin-bottom: 40px;">
+                <div class="deco-dot"></div>
+                <div class="deco-dot"></div>
+                <div class="deco-dot"></div>
+                <div class="deco-dot"></div>
+            </div>
+
             <div class="btn-container">
                 <a href="#" id="link-itch-io" class="btn" target="_blank">ITCH.IO</a>
                 <a href="#" id="link-artstation" class="btn" target="_blank">ARTSTATION</a>
