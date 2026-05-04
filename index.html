@@ -7,4 +7,504 @@
   <h1>Hello, World!</h1>
   <p>This is my first website hosted on GitHub Pages.</p>
 </body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lakshman | Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #050505;
+            --main-color: #ff007f; /* Hot Pink / Magenta */
+            --text-main: #f0f0f0;
+            --text-dim: #a0a0a0;
+            --neon-glow: 0 0 8px rgba(255, 0, 127, 0.6);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Press Start 2P', cursive;
+            line-height: 1.6;
+            font-size: 10px;
+            padding: 5vw; /* Responsive padding */
+            overflow-x: hidden;
+        }
+
+        /* --- LAYOUT & CONTAINERS --- */
+        .container {
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .section-divider {
+            border-top: 2px dashed var(--main-color);
+            margin: 40px 0;
+            position: relative;
+        }
+
+        .section-title {
+            color: var(--main-color);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-shadow: var(--neon-glow);
+            font-size: clamp(10px, 3vw, 16px); /* Responsive font sizing */
+        }
+
+        .box {
+            border: 2px solid var(--main-color);
+            padding: 20px;
+            background: rgba(255, 0, 127, 0.05);
+            box-shadow: var(--neon-glow);
+            width: 100%;
+        }
+
+        /* --- HEADER & PACMAN ART --- */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #fff;
+            text-shadow: 2px 2px 0 var(--main-color), -2px -2px 0 var(--main-color);
+            font-size: clamp(16px, 5vw, 28px); /* Responsive heading */
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            word-wrap: break-word;
+        }
+
+        .subtitle {
+            color: var(--text-dim);
+            font-size: clamp(6px, 2vw, 8px);
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .arcade-animation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap; /* Allows wrapping on tiny screens */
+        }
+
+        .pacman {
+            width: 0px;
+            height: 0px;
+            border-right: 15px solid transparent;
+            border-top: 15px solid #ffcc00;
+            border-left: 15px solid #ffcc00;
+            border-bottom: 15px solid #ffcc00;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            animation: chomp 0.5s infinite alternate;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            background-color: var(--main-color);
+            border-radius: 50%;
+            box-shadow: var(--neon-glow);
+        }
+
+        @keyframes chomp {
+            0% { border-right: 15px solid transparent; }
+            100% { border-right: 15px solid #ffcc00; }
+        }
+
+        /* --- NAV BAR --- */
+        .nav-bar {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap; /* Let links wrap on mobile */
+            gap: 10px;
+            border-top: 2px solid var(--main-color);
+            border-bottom: 2px solid var(--main-color);
+            padding: 15px 0;
+            margin-bottom: 40px;
+        }
+        
+        .nav-bar a {
+            color: var(--main-color);
+            text-decoration: none;
+            padding: 5px 15px;
+            border-right: 2px solid var(--main-color);
+            font-size: clamp(8px, 2vw, 10px);
+        }
+        
+        .nav-bar a:last-child {
+            border-right: none;
+        }
+
+        .nav-bar a:hover {
+            color: #fff;
+            text-shadow: var(--neon-glow);
+        }
+
+        /* --- PLAYER SELECT (ABOUT) --- */
+        .player-content {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        /* CSS Enderman Avatar */
+        .avatar-box {
+            border: 2px solid #fff;
+            padding: 5px;
+            background: #000;
+            flex-shrink: 0; /* Prevent avatar from squishing */
+        }
+
+        .enderman {
+            width: 80px;
+            height: 80px;
+            background: #111; 
+            position: relative;
+            border: 2px solid #222;
+        }
+
+        .enderman::before, .enderman::after {
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 8px;
+            background: #d870db; 
+            top: 40px;
+            box-shadow: 0 0 8px #d870db, inset 0 0 2px #fff;
+        }
+
+        .enderman::before { left: 5px; }
+        .enderman::after { right: 5px; }
+
+        .player-stats h2 {
+            color: #fff;
+            font-size: clamp(10px, 3vw, 14px);
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .player-stats p {
+            color: var(--text-dim);
+            line-height: 2;
+            margin-bottom: 15px;
+        }
+
+        /* --- POWER-UPS (SKILLS) --- */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Fluid grid */
+            gap: 20px;
+        }
+
+        .skill-item {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .skill-name {
+            color: #fff;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 15px;
+            border: 2px solid var(--main-color);
+            padding: 2px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--main-color);
+            box-shadow: var(--neon-glow);
+        }
+
+        /* --- STAGE SELECT (PROJECTS) --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: 1fr; 
+            gap: 30px;
+        }
+
+        .project-card h3 {
+            color: #fff;
+            font-size: clamp(10px, 3vw, 12px);
+            margin-bottom: 15px;
+            word-wrap: break-word;
+        }
+
+        .project-card p {
+            color: var(--text-dim);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .tag-container {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            border: 1px solid var(--main-color);
+            padding: 5px 10px;
+            font-size: 8px;
+            color: var(--main-color);
+            white-space: nowrap;
+        }
+
+        /* --- CONTINUE (FOOTER) --- */
+        .contact-box {
+            text-align: center;
+        }
+
+        .contact-box p {
+            margin-bottom: 20px;
+            color: var(--text-dim);
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            border: 2px solid var(--main-color);
+            padding: 10px 20px;
+            color: var(--main-color);
+            text-decoration: none;
+            transition: all 0.2s;
+            background: transparent;
+            cursor: pointer;
+            font-size: clamp(8px, 2vw, 10px);
+            flex-grow: 1; /* Helps buttons look even on mobile */
+            text-align: center;
+            max-width: 200px;
+        }
+
+        .btn:hover {
+            background: var(--main-color);
+            color: #000;
+            box-shadow: var(--neon-glow);
+        }
+
+        footer {
+            margin-top: 60px;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 8px;
+            border-top: 2px dashed var(--main-color);
+            padding-top: 20px;
+            line-height: 1.8;
+        }
+
+        /* --- RESPONSIVE MEDIA QUERIES --- */
+        @media (max-width: 600px) {
+            .nav-bar a {
+                border-right: none; /* Remove borders on mobile so it wraps cleaner */
+                border-bottom: 1px solid rgba(255, 0, 127, 0.3);
+                padding: 10px;
+                width: 45%; /* Creates a neat 2x2 grid for nav on mobile */
+                text-align: center;
+            }
+            
+            .nav-bar a:last-child, .nav-bar a:nth-last-child(2) {
+                border-bottom: none;
+            }
+
+            .player-content {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .avatar-box {
+                margin-bottom: 10px;
+            }
+            
+            .btn-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <div class="arcade-animation" style="margin-bottom: 20px;">
+            <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        </div>
+        <h1>LAKSHMAN.DEV</h1>
+        <div class="subtitle">GAME DEVELOPER • 3D ARTIST • LEVEL 99</div>
+        <div class="arcade-animation">
+            <div class="pacman"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </header>
+
+    <div class="nav-bar">
+        <a href="#player">ABOUT</a>
+        <a href="#powerups">SKILLS</a>
+        <a href="#stages">PROJECTS</a>
+        <a href="#continue">CONTACT</a>
+    </div>
+
+    <!-- PLAYER SELECT -->
+    <section id="player">
+        <h2 class="section-title">
+            <span>👾</span> PLAYER SELECT
+        </h2>
+        <div class="box player-content">
+            <div class="avatar-box">
+                <div class="enderman"></div>
+            </div>
+            <div class="player-stats">
+                <h2>LAKSHMAN NARAIN RAGUBATHY</h2>
+                <p>Computer Games Development student at APU and incoming Game Developer Intern at Alva Productions. Focused on building tight gameplay loops, high-fidelity 3D assets, and optimizing performance. Ready to teleport into the next big project.</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- POWER-UPS -->
+    <section id="powerups">
+        <h2 class="section-title">
+            <span>⚡</span> POWER-UPS (SOFTWARE)
+        </h2>
+        <div class="box skills-grid">
+            
+            <div class="skill-item">
+                <div class="skill-name">UNITY / C#</div>
+                <div class="progress-bar"><div class="progress-fill" style="width: 90%;"></div></div>
+            </div>
+
+            <div class="skill-item">
+                <div class="skill-name">UNREAL ENGINE 5</div>
+                <div class="progress-bar"><div class="progress-fill" style="width: 80%;"></div></div>
+            </div>
+
+            <div class="skill-item">
+                <div class="skill-name">BLENDER / 3D MAX</div>
+                <div class="progress-bar"><div class="progress-fill" style="width: 85%;"></div></div>
+            </div>
+
+            <div class="skill-item">
+                <div class="skill-name">SUBSTANCE PAINTER</div>
+                <div class="progress-bar"><div class="progress-fill" style="width: 75%;"></div></div>
+            </div>
+
+            <div class="skill-item">
+                <div class="skill-name">GODOT</div>
+                <div class="progress-bar"><div class="progress-fill" style="width: 70%;"></div></div>
+            </div>
+
+            <div class="skill-item">
+                <div class="skill-name">PYTHON / C++</div>
+                <div class="progress-bar"><div class="progress-fill" style="width: 80%;"></div></div>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- STAGE SELECT -->
+    <section id="stages">
+        <h2 class="section-title">
+            <span>📺</span> STAGE SELECT
+        </h2>
+        <div class="projects-grid">
+
+            <div class="box project-card">
+                <h3>>> BLAST ROCK</h3>
+                <p>A full game project officially published on itch.io. Handled core mechanics, rendering, and deployment. Built from the ground up to feature engaging player feedback and solid performance across systems.</p>
+                <div class="tag-container">
+                    <span class="tag">GAME DESIGN</span>
+                    <span class="tag">ITCH.IO</span>
+                    <span class="tag">RELEASED</span>
+                </div>
+            </div>
+
+            <div class="box project-card">
+                <h3>>> FIRST-PERSON SURVIVAL HORROR</h3>
+                <p>Acted as lead programmer for this 72-hour game jam project. Engineered the AI navigation for enemy entities, managed the central gameplay loop, and implemented atmospheric lighting and audio cues to drive tension.</p>
+                <div class="tag-container">
+                    <span class="tag">72HR GAME JAM</span>
+                    <span class="tag">LEAD PROGRAMMER</span>
+                    <span class="tag">AI PATHFINDING</span>
+                </div>
+            </div>
+
+            <div class="box project-card">
+                <h3>>> RESOURCE MANAGEMENT / 2D ADVENTURE</h3>
+                <p>Collaborated as a programmer on multiple fast-paced 48-hour game jam projects. Rapidly prototyped inventory systems, UI logic, and 2D character controllers while ensuring clean version control with the team.</p>
+                <div class="tag-container">
+                    <span class="tag">48HR GAME JAM</span>
+                    <span class="tag">SYSTEMS PROGRAMMING</span>
+                    <span class="tag">RAPID PROTOTYPING</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- CONTINUE -->
+    <section id="continue">
+        <h2 class="section-title">
+            <span>❓</span> CONTINUE?
+        </h2>
+        <div class="box contact-box">
+            <p>READY TO TEAM UP? INSERT COIN OR CLICK BELOW.</p>
+            <div class="btn-container">
+                <a href="#" class="btn">ITCH.IO</a>
+                <a href="#" class="btn">ARTSTATION</a>
+                <a href="#" class="btn">GITHUB</a>
+                <a href="#" class="btn">EMAIL</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>HIGH SCORE: 9,999,990 | © 2026 LAKSHMAN.DEV. ALL RIGHTS RESERVED.</p>
+    </footer>
+
+</div>
+
+</body>
 </html>
