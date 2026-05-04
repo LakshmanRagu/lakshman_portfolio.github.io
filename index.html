@@ -375,14 +375,20 @@
             margin-bottom: 15px;
         }
 
+        li::marker {
+            color: var(--main-color);
+        }
+
         .project-card p, .box > p {
             color: var(--text-dim);
         }
 
-        /* Emphasized Bold Text in Lists (White, No Glow) */
+        /* Emphasized Bold Text in Lists (Magenta & Separated) */
         .project-card strong {
-            color: var(--text-bright);
+            color: var(--main-color);
             font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
         }
 
         /* --- CONTINUE (FOOTER) --- */
@@ -762,8 +768,27 @@
             
             <div class="box">
                 <h3 style="color: var(--main-color); margin-bottom: 20px;">>> ASIA PACIFIC UNIVERSITY (2023-2025)</h3>
-                <p style="margin-bottom: 25px;">
-                Pursuing a degree in Bcs Computer Science in Games Development. Subjects learnt Computer Games High Concept, Basic 3d Computer Character Modelling, Game Engines, Analogue Games, Imaging and Special Effects, Computer Graphics, Believable Models for Game and Virtual Reality Mathematics for Computer Graphics, Programming For Data Analysis, Computer Games Design: Production and Testing, Mathematical Concept for Computing, Computer Games Level Design, Computer Games Design Documentation, Introduction to Object Oriented Programming, Programming with Python, and Introduction to Graphics and Basic 3D Applications.</p>
+                <p style="margin-bottom: 15px;">
+                Pursuing a degree in Bcs Computer Science in Games Development.</p>
+                <p style="margin-bottom: 15px;"><strong style="color: var(--main-color);">Subjects learnt:</strong></p>
+                <ul style="padding-left: 20px; margin-bottom: 25px; color: var(--text-dim); list-style-type: square;">
+                    <li style="margin-bottom: 5px;">Computer Games High Concept</li>
+                    <li style="margin-bottom: 5px;">Basic 3d Computer Character Modelling</li>
+                    <li style="margin-bottom: 5px;">Game Engines</li>
+                    <li style="margin-bottom: 5px;">Analogue Games</li>
+                    <li style="margin-bottom: 5px;">Imaging and Special Effects</li>
+                    <li style="margin-bottom: 5px;">Computer Graphics</li>
+                    <li style="margin-bottom: 5px;">Believable Models for Game and Virtual Reality</li>
+                    <li style="margin-bottom: 5px;">Mathematics for Computer Graphics</li>
+                    <li style="margin-bottom: 5px;">Programming For Data Analysis</li>
+                    <li style="margin-bottom: 5px;">Computer Games Design: Production and Testing</li>
+                    <li style="margin-bottom: 5px;">Mathematical Concept for Computing</li>
+                    <li style="margin-bottom: 5px;">Computer Games Level Design</li>
+                    <li style="margin-bottom: 5px;">Computer Games Design Documentation</li>
+                    <li style="margin-bottom: 5px;">Introduction to Object Oriented Programming</li>
+                    <li style="margin-bottom: 5px;">Programming with Python</li>
+                    <li style="margin-bottom: 5px;">Introduction to Graphics and Basic 3D Applications</li>
+                </ul>
                 
                 <h3 style="color: var(--main-color); margin-bottom: 15px;">>> 3D & DIGITAL ART TOOLS</h3>
                 <div style="display:flex; gap:10px; flex-wrap:wrap;">
