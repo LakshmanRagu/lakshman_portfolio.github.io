@@ -1,26 +1,74 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>yeeeee</title>
-</head>
-<body>
-  <h1>Hello, World!</h1>
-  <p>This is my first website hosted on GitHub Pages.</p>
-</body>
-</html><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lakshman | Portfolio</title>
+    <title>Lakshman Narain Ragubathy | Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    
+    <!-- ========================================== -->
+    <!-- LINKS CONFIGURATION                        -->
+    <!-- ========================================== -->
+    <script>
+        const PORTFOLIO_LINKS = {
+            // Game Links (All route to your main itch.io as per the PDF)
+            "link-welcome-back": "https://reirann.itch.io/welcome-back",
+            "link-the-long-take": "https://lakshmanragu.itch.io/the-long-take",
+            "link-scraping-angel": "https://reirann.itch.io/scraping-angel",
+            "link-grow-a-city": "https://reirann.itch.io/grow-a-city",
+            "link-passing-great-white": "https://iddcv.itch.io/passing-of-the-great-white",
+            "link-escape-parking-lot": "https://itch.io/jam/mini-jam-208-inverted/rate/4471924",
+            "link-blast-rock": "https://itch.io/jam/portfolio-builders-jam-week-67/rate/4455852",
+            "link-sky-slime": "https://lakshmanragu.itch.io/sky-slimed",
+            "link-uni-projects": "https://youtu.be/Uj-wqgUHFWk",
+            
+            // Contact Links
+            "link-itch-io": "https://dio.itch.io", 
+            "link-email": "mailto:lakshmannarainragubathy@gmail.com",
+            "link-artstation": "https://www.artstation.com/lakshmanragu", 
+            // "link-github": "#"  <-- Commented out for now
+        };
+
+        document.addEventListener("DOMContentLoaded", () => {
+            // Apply Links
+            for (const [id, url] of Object.entries(PORTFOLIO_LINKS)) {
+                const element = document.getElementById(id);
+                if (element && url !== "#") {
+                    element.href = url;
+                }
+            }
+
+            // Generate Magenta Particles
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 35; 
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'ender-particle';
+                
+                // Randomize position
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.top = Math.random() * 100 + 'vh';
+                
+                // Randomize animation delay and duration so they look organic
+                particle.style.animationDelay = Math.random() * 5 + 's';
+                particle.style.animationDuration = (3 + Math.random() * 4) + 's';
+                
+                particlesContainer.appendChild(particle);
+            }
+        });
+    </script>
+    <!-- ========================================== -->
+
     <style>
         :root {
             --bg-color: #050505;
-            --main-color: #ff007f; /* Hot Pink / Magenta */
-            --text-main: #f0f0f0;
-            --text-dim: #a0a0a0;
+            --main-color: #ff007f; /* Hot Pink / Neon Magenta */
+            --text-dim: #e6e6e6; /* Brighter grey for high readability */
+            --text-bright: #ffffff; /* Crisp white, NO neon glow */
+            --link-blue: #00d4ff; /* Arcade Blue */
             --neon-glow: 0 0 8px rgba(255, 0, 127, 0.6);
+            --blue-glow: 0 0 8px rgba(0, 212, 255, 0.6);
         }
 
         * {
@@ -31,17 +79,45 @@
 
         body {
             background-color: var(--bg-color);
-            color: var(--text-main);
+            color: var(--text-dim);
             font-family: 'Press Start 2P', cursive;
-            line-height: 1.6;
+            line-height: 1.8;
             font-size: 10px;
-            padding: 5vw; /* Responsive padding */
+            padding: 5vw; 
             overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- PARTICLES --- */
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .ender-particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: var(--main-color);
+            box-shadow: 0 0 10px 2px var(--main-color);
+            opacity: 0;
+            animation: float-and-fade 4s linear infinite;
+        }
+
+        @keyframes float-and-fade {
+            0% { transform: translateY(0) scale(0.5); opacity: 0; }
+            50% { transform: translateY(-50px) scale(1.2); opacity: 0.8; }
+            100% { transform: translateY(-100px) scale(0.5); opacity: 0; }
         }
 
         /* --- LAYOUT & CONTAINERS --- */
         .container {
-            max-width: 900px;
+            max-width: 1400px; /* Stretched wide for widescreen */
             width: 100%;
             margin: 0 auto;
         }
@@ -59,15 +135,16 @@
             align-items: center;
             gap: 15px;
             text-shadow: var(--neon-glow);
-            font-size: clamp(10px, 3vw, 16px); /* Responsive font sizing */
+            font-size: clamp(12px, 3vw, 18px); 
         }
 
         .box {
             border: 2px solid var(--main-color);
-            padding: 20px;
-            background: rgba(255, 0, 127, 0.05);
+            padding: 25px;
+            background: rgba(0, 0, 0, 0.6); 
             box-shadow: var(--neon-glow);
             width: 100%;
+            backdrop-filter: blur(2px);
         }
 
         /* --- HEADER & PACMAN ART --- */
@@ -80,18 +157,19 @@
         h1 {
             color: #fff;
             text-shadow: 2px 2px 0 var(--main-color), -2px -2px 0 var(--main-color);
-            font-size: clamp(16px, 5vw, 28px); /* Responsive heading */
+            font-size: clamp(12px, 4vw, 24px); 
             margin-bottom: 10px;
             letter-spacing: 2px;
             word-wrap: break-word;
         }
 
         .subtitle {
-            color: var(--text-dim);
-            font-size: clamp(6px, 2vw, 8px);
+            color: var(--main-color);
+            font-size: clamp(7px, 1.5vw, 10px);
             letter-spacing: 1px;
             margin-bottom: 20px;
             line-height: 1.8;
+            text-shadow: var(--neon-glow);
         }
 
         .arcade-animation {
@@ -100,7 +178,7 @@
             align-items: center;
             gap: 15px;
             margin-top: 20px;
-            flex-wrap: wrap; /* Allows wrapping on tiny screens */
+            flex-wrap: wrap; 
         }
 
         .pacman {
@@ -134,12 +212,13 @@
         .nav-bar {
             display: flex;
             justify-content: center;
-            flex-wrap: wrap; /* Let links wrap on mobile */
+            flex-wrap: wrap; 
             gap: 10px;
             border-top: 2px solid var(--main-color);
             border-bottom: 2px solid var(--main-color);
             padding: 15px 0;
             margin-bottom: 40px;
+            background: rgba(0,0,0,0.5);
         }
         
         .nav-bar a {
@@ -147,7 +226,7 @@
             text-decoration: none;
             padding: 5px 15px;
             border-right: 2px solid var(--main-color);
-            font-size: clamp(8px, 2vw, 10px);
+            font-size: clamp(8px, 2vw, 12px);
         }
         
         .nav-bar a:last-child {
@@ -166,12 +245,11 @@
             align-items: flex-start;
         }
 
-        /* CSS Enderman Avatar */
         .avatar-box {
             border: 2px solid #fff;
             padding: 5px;
             background: #000;
-            flex-shrink: 0; /* Prevent avatar from squishing */
+            flex-shrink: 0; 
         }
 
         .enderman {
@@ -187,90 +265,76 @@
             position: absolute;
             width: 22px;
             height: 8px;
-            background: #d870db; 
+            background: var(--main-color); 
             top: 40px;
-            box-shadow: 0 0 8px #d870db, inset 0 0 2px #fff;
+            box-shadow: 0 0 8px var(--main-color), inset 0 0 2px #fff;
         }
 
         .enderman::before { left: 5px; }
         .enderman::after { right: 5px; }
 
         .player-stats h2 {
-            color: #fff;
-            font-size: clamp(10px, 3vw, 14px);
+            color: var(--main-color);
+            font-size: clamp(12px, 3vw, 16px);
             margin-bottom: 15px;
             line-height: 1.4;
         }
 
         .player-stats p {
             color: var(--text-dim);
-            line-height: 2;
-            margin-bottom: 15px;
         }
 
-        /* --- POWER-UPS (SKILLS) --- */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Fluid grid */
-            gap: 20px;
-        }
-
-        .skill-item {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            width: 100%;
-        }
-
-        .skill-name {
-            color: #fff;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 15px;
-            border: 2px solid var(--main-color);
-            padding: 2px;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background-color: var(--main-color);
-            box-shadow: var(--neon-glow);
-        }
-
-        /* --- STAGE SELECT (PROJECTS) --- */
+        /* --- CARDS GRID (STRICT 1 COLUMN STRETCHED) --- */
         .projects-grid {
             display: grid;
-            grid-template-columns: 1fr; 
+            grid-template-columns: 1fr; /* Forced to 1 column, stretches full width */
             gap: 30px;
+            width: 100%;
         }
 
-        .project-card h3 {
-            color: #fff;
-            font-size: clamp(10px, 3vw, 12px);
-            margin-bottom: 15px;
+        .project-card h3, .box > h3 {
+            font-size: clamp(12px, 3vw, 14px);
             word-wrap: break-word;
+            margin: 0 0 15px 0;
+            color: var(--main-color); 
+            line-height: 1.4;
         }
 
-        .project-card p {
+        .game-link {
+            color: var(--link-blue);
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 15px;
+            transition: all 0.2s ease;
+        }
+
+        .game-link h3 {
+            color: var(--link-blue);
+        }
+
+        .game-link:hover h3 {
+            color: #fff;
+            text-shadow: var(--blue-glow);
+        }
+
+        /* Lists and Paragraphs inside Cards */
+        .project-card ul {
             color: var(--text-dim);
-            line-height: 1.8;
-            margin-bottom: 20px;
+            padding-left: 20px;
         }
 
-        .tag-container {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
+        .project-card li {
+            margin-bottom: 15px;
         }
 
-        .tag {
-            border: 1px solid var(--main-color);
-            padding: 5px 10px;
-            font-size: 8px;
-            color: var(--main-color);
-            white-space: nowrap;
+        .project-card p, .box > p {
+            color: var(--text-dim);
+        }
+
+        /* Emphasized Bold Text in Lists (White, No Glow) */
+        .project-card strong {
+            color: var(--text-bright);
+            font-weight: bold;
         }
 
         /* --- CONTINUE (FOOTER) --- */
@@ -293,16 +357,16 @@
         .btn {
             display: inline-block;
             border: 2px solid var(--main-color);
-            padding: 10px 20px;
+            padding: 15px 25px;
             color: var(--main-color);
             text-decoration: none;
             transition: all 0.2s;
-            background: transparent;
+            background: rgba(0,0,0,0.8);
             cursor: pointer;
-            font-size: clamp(8px, 2vw, 10px);
-            flex-grow: 1; /* Helps buttons look even on mobile */
+            font-size: clamp(10px, 2vw, 12px);
+            flex-grow: 1; 
             text-align: center;
-            max-width: 200px;
+            max-width: 250px;
         }
 
         .btn:hover {
@@ -324,10 +388,10 @@
         /* --- RESPONSIVE MEDIA QUERIES --- */
         @media (max-width: 600px) {
             .nav-bar a {
-                border-right: none; /* Remove borders on mobile so it wraps cleaner */
+                border-right: none; 
                 border-bottom: 1px solid rgba(255, 0, 127, 0.3);
                 padding: 10px;
-                width: 45%; /* Creates a neat 2x2 grid for nav on mobile */
+                width: 45%; 
                 text-align: center;
             }
             
@@ -359,14 +423,17 @@
 </head>
 <body>
 
+<!-- Particle Container -->
+<div id="particles"></div>
+
 <div class="container">
 
     <header>
         <div class="arcade-animation" style="margin-bottom: 20px;">
             <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
         </div>
-        <h1>LAKSHMAN.DEV</h1>
-        <div class="subtitle">GAME DEVELOPER • 3D ARTIST • LEVEL 99</div>
+        <h1>LAKSHMAN NARAIN RAGUBATHY</h1>
+        <div class="subtitle">GAMEPLAY PROGRAMMER • LEAD PROGRAMMER • 3D ARTIST • CS STUDENT</div>
         <div class="arcade-animation">
             <div class="pacman"></div>
             <div class="dot"></div>
@@ -377,9 +444,10 @@
 
     <div class="nav-bar">
         <a href="#player">ABOUT</a>
-        <a href="#powerups">SKILLS</a>
-        <a href="#stages">PROJECTS</a>
-        <a href="#continue">CONTACT</a>
+        <a href="#software">SOFTWARE</a>
+        <a href="#games">GAMES</a>
+        <a href="#uni-projects">UNI PROJECTS</a>
+        <a href="#extras">EXTRAS</a>
     </div>
 
     <!-- PLAYER SELECT -->
@@ -393,48 +461,55 @@
             </div>
             <div class="player-stats">
                 <h2>LAKSHMAN NARAIN RAGUBATHY</h2>
-                <p>Computer Games Development student at APU and incoming Game Developer Intern at Alva Productions. Focused on building tight gameplay loops, high-fidelity 3D assets, and optimizing performance. Ready to teleport into the next big project.</p>
+                <p>Aspiring Gameplay Programmer heavily focused on writing tight code and building engaging mechanics. Specializing in C#, C++, and Python to drive gameplay loops, AI, and systems. Ready to teleport into the next big project.</p>
             </div>
         </div>
     </section>
 
     <div class="section-divider"></div>
 
-    <!-- POWER-UPS -->
-    <section id="powerups">
+    <!-- SOFTWARE -->
+    <section id="software">
         <h2 class="section-title">
-            <span>⚡</span> POWER-UPS (SOFTWARE)
+            <span>⚡</span> SOFTWARE
         </h2>
-        <div class="box skills-grid">
+        <div class="projects-grid">
             
-            <div class="skill-item">
-                <div class="skill-name">UNITY / C#</div>
-                <div class="progress-bar"><div class="progress-fill" style="width: 90%;"></div></div>
+            <div class="box project-card">
+                <h3>>> UNITY (INTERMEDIATE)</h3>
+                <ul>
+                    <li><strong>AI & Pathfinding Systems:</strong> Engineered complex enemy AI using Unity's AI Navigation package and NavMesh. Developed dynamic patrol routing, waypoint navigation, and player-detection chase mechanics. Implemented specialized line-of-sight logic to freeze enemy movement when viewed by the player's camera, alongside automated fail-safe routines to resolve pathfinding deadlocks. Programmed hostile vehicle AI with environmental combat logic that allows players to bait enemies into fatal collisions.</li>
+                    <li><strong>Character Controllers & Physics:</strong> Built physics-based 2D character locomotion utilizing Rigidbody2D and Capsule Collider2D, integrating scalable mechanics for dashing, wall sliding, wall jumping, and melee combat. Configured smooth, jitter-free 3D player controllers by seamlessly integrating Unity's Character Controller with the Cinemachine package.</li>
+                    <li><strong>Core Systems & Architecture:</strong> Designed object pooling systems for optimized instantiation of projectiles and enemies. Engineered a dual-perspective camera system for seamless transitions between 3D first-person and strategic top-down tactical views. Developed custom game managers, tile-based dynamic spawning systems based on 2D UI input, and progressive time-based hazard mechanics. Created robust respawn architectures utilizing Y-axis boundary checks (void catchers) to automatically catch and reset the player's transform if they fall out of bounds.</li>
+                    <li><strong>Visuals, Audio, & Narrative:</strong> Utilized TextMeshPro to implement animated, pop-in typography for dynamic dialogue systems featuring interactive text boxes. Engineered dynamic jumpscare sequences utilizing camera hierarchies and custom scene transition scripts. Created custom sound managers utilizing dictionary and array structures for randomized and categorized audio playback, as well as integrating spatial audio cues. Designed shader graphs for custom lighting effects and managed particle systems with collision detection for environmental effects. Integrated external tools like Convai for AI character interactions within VR environments.</li>
+                </ul>
             </div>
 
-            <div class="skill-item">
-                <div class="skill-name">UNREAL ENGINE 5</div>
-                <div class="progress-bar"><div class="progress-fill" style="width: 80%;"></div></div>
+            <div class="box project-card">
+                <h3>>> UNREAL ENGINE 5 (INTERMEDIATE)</h3>
+                <ul>
+                    <li><strong>Core Logic & Systems:</strong> Utilized hybrid development approaches combining C++ and Blueprints Visual Scripting to engineer state-driven gameplay loops and custom timer systems.</li>
+                    <li><strong>Player Mechanics:</strong> Developed custom 3rd-person character controllers with interactive, state-driven mechanics. Implemented features such as emissive texture swapping triggered by environmental interactions (e.g., character glowing) and breakable platforms.</li>
+                    <li><strong>World Building & Level Design:</strong> Engineered dynamic day and night cycles utilizing skybox manipulation and texture swapping. Created level transporters, interactive environmental hazards (like death magma blocks and moving ray-casted objects), and localized fireplace spawn-point systems. Designed comprehensive UI elements, including menus, controls, and end screens, alongside multiple sequenced game levels and start cutscenes. Integrated diverse sound effects encompassing background music, character movement, and ambient audio.</li>
+                </ul>
             </div>
 
-            <div class="skill-item">
-                <div class="skill-name">BLENDER / 3D MAX</div>
-                <div class="progress-bar"><div class="progress-fill" style="width: 85%;"></div></div>
+            <div class="box project-card">
+                <h3>>> PYTHON & PYGAME (INTERMEDIATE)</h3>
+                <ul>
+                    <li><strong>Architecture & Optimization:</strong> Leveraged Object-Oriented Programming (OOP) principles to create modular classes for entities such as players, projectiles, and enemies. Optimized game loops and memory management by utilizing Pygame Sprite Groups for efficient batch rendering, entity spawning, and continuous collision tracking for high volumes of assets.</li>
+                    <li><strong>Physics & Collision Systems:</strong> Developed responsive, multi-directional character controllers integrated with frame-rate independent physics (Delta Time) to ensure consistent movement speeds across different hardware. Implemented high-precision collision detection utilizing Pygame-CE's FRect (floating-point rectangles) and pixel-perfect sprite masks to eliminate positional rounding errors common in standard integer-based bounding boxes. Built continuous rotational transforms and basic AI systems that actively follow the player.</li>
+                    <li><strong>UI & Feedback Integration:</strong> Enhanced the player experience by developing real-time survival-tracking UI scoreboards and integrating dynamic audio feedback, including background music and synchronized sound effects for weapon firing and entity destruction.</li>
+                </ul>
             </div>
 
-            <div class="skill-item">
-                <div class="skill-name">SUBSTANCE PAINTER</div>
-                <div class="progress-bar"><div class="progress-fill" style="width: 75%;"></div></div>
-            </div>
-
-            <div class="skill-item">
-                <div class="skill-name">GODOT</div>
-                <div class="progress-bar"><div class="progress-fill" style="width: 70%;"></div></div>
-            </div>
-
-            <div class="skill-item">
-                <div class="skill-name">PYTHON / C++</div>
-                <div class="progress-bar"><div class="progress-fill" style="width: 80%;"></div></div>
+            <div class="box project-card">
+                <h3>>> MAXSCRIPT & PROCEDURAL TOOLS (BEGINNER)</h3>
+                <ul>
+                    <li><strong>Procedural Tool Development:</strong> Engineered custom procedural environment generators capable of dynamically spawning city elements such as buildings and vehicles into predetermined locations.</li>
+                    <li><strong>Data Structures & Logic:</strong> Utilized array-based logic to store, manage, and randomize structural elements, locations, and texture presets.</li>
+                    <li><strong>UI Integration & Customization:</strong> Developed custom drop-down menus within the tool's UI to allow real-time color and texture swapping (e.g., modifying car and truck colors, or swapping character textures to multiple presets). Implemented reset functionality allowing users to regenerate randomized amounts and locations of spawned entities on demand to iterate on level layouts.</li>
+                </ul>
             </div>
 
         </div>
@@ -442,40 +517,201 @@
 
     <div class="section-divider"></div>
 
-    <!-- STAGE SELECT -->
-    <section id="stages">
+    <!-- GAMES -->
+    <section id="games">
         <h2 class="section-title">
-            <span>📺</span> STAGE SELECT
+            <span>📺</span> GAMES
         </h2>
         <div class="projects-grid">
 
             <div class="box project-card">
-                <h3>>> BLAST ROCK</h3>
-                <p>A full game project officially published on itch.io. Handled core mechanics, rendering, and deployment. Built from the ground up to feature engaging player feedback and solid performance across systems.</p>
-                <div class="tag-container">
-                    <span class="tag">GAME DESIGN</span>
-                    <span class="tag">ITCH.IO</span>
-                    <span class="tag">RELEASED</span>
-                </div>
+                <a href="#" id="link-welcome-back" class="game-link" target="_blank">
+                    <h3>>> WELCOME BACK</h3>
+                </a>
+                <ul>
+                    <li>Co-programmer on a 5-person team for a 48-hour game jam, developing a 2D pixel art adventure where the player must urgently tidy a messy apartment before an important guest arrives.</li>
+                    <li>Implemented physics-based 2D character locomotion utilizing Unity's Rigidbody2D component.</li>
+                    <li>Integrated character animation states and synchronized audio cues for footstep events.</li>
+                    <li>Engineered the core gameplay loop, developing a custom timer system that directly drives the game's win and loss conditions.</li>
+                </ul>
             </div>
 
             <div class="box project-card">
-                <h3>>> FIRST-PERSON SURVIVAL HORROR</h3>
-                <p>Acted as lead programmer for this 72-hour game jam project. Engineered the AI navigation for enemy entities, managed the central gameplay loop, and implemented atmospheric lighting and audio cues to drive tension.</p>
-                <div class="tag-container">
-                    <span class="tag">72HR GAME JAM</span>
-                    <span class="tag">LEAD PROGRAMMER</span>
-                    <span class="tag">AI PATHFINDING</span>
-                </div>
+                <a href="#" id="link-the-long-take" class="game-link" target="_blank">
+                    <h3>>> THE LONG TAKE</h3>
+                </a>
+                <ul>
+                    <li>Lead Gameplay Programmer for a 2d platformer of a stuntman going through the motions dodging obstacles and weaving through enemies.</li>
+                    <li>Developed a robust 2D player controller utilizing Rigidbody2D and CapsuleCollider2D, integrating scalable mechanics for dashing, wall sliding, wall jumping, and melee combat, with built-in architecture for modular ability expansion like double jump.</li>
+                    <li>Used particle system to make blood effects whenever the layer dies or kills an enemy it will splatter blood everywhere. Also enabled collision on the particles so that it will stick to the floor. After a while the particle system will be disabled.</li>
+                    <li>Made a sound manager that can lay sounds randomised but also categorised. For example, if you want multiple melee sounds it calls the melee sound from an internal array that has multiple melee sfx. It's basically a bunch of arrays inside a dictionary.</li>
+                    <li>Made a bat enemy that moves up and down and looks at the player.</li>
+                    <li>Made a death screen that appears when the player dies and lays a sequential voice line that later than randomises it.</li>
+                    <li>Used shader graph to add a hollow knight like effect of the light of the player and a glow hurt material.</li>
+                    <li>Configured scene transition logic and trigger volumes to seamlessly route the player to the end credits sequence upon game completion.</li>
+                </ul>
             </div>
 
             <div class="box project-card">
-                <h3>>> RESOURCE MANAGEMENT / 2D ADVENTURE</h3>
-                <p>Collaborated as a programmer on multiple fast-paced 48-hour game jam projects. Rapidly prototyped inventory systems, UI logic, and 2D character controllers while ensuring clean version control with the team.</p>
-                <div class="tag-container">
-                    <span class="tag">48HR GAME JAM</span>
-                    <span class="tag">SYSTEMS PROGRAMMING</span>
-                    <span class="tag">RAPID PROTOTYPING</span>
+                <a href="#" id="link-scraping-angel" class="game-link" target="_blank">
+                    <h3>>> SCRAPING ANGEL</h3>
+                </a>
+                <ul>
+                    <li>Lead Programmer for a 72-hour game jam, developing a first-person survival horror game featuring a detective pursued by a Weeping Angel-style entity.</li>
+                    <li>Programmed complex enemy AI utilizing Unity's AI Navigation package and NavMesh, featuring dynamic patrol routing and player-detection chase mechanics.</li>
+                    <li>Implemented line-of-sight logic, forcing the AI to freeze its movement whenever it is rendered within the player's camera view.</li>
+                    <li>Developed automated fail-safe routines to resolve AI pathfinding deadlocks and prevent the entity from getting stuck on environmental geometry.</li>
+                    <li>Configured a smooth, jitter-free player controller by integrating Unity's Character Controller with the Cinemachine package.</li>
+                    <li>Designed an object interaction system linked to the game's core objective and win state.</li>
+                    <li>Engineered a dynamic jumpscare sequence utilizing camera hierarchies, seamlessly integrated with a fail-state trigger that routes the player back to the main menu.</li>
+                </ul>
+            </div>
+
+            <div class="box project-card">
+                <a href="#" id="link-grow-a-city" class="game-link" target="_blank">
+                    <h3>>> GROW A CITY</h3>
+                </a>
+                <ul>
+                    <li>Lead Programmer for a 48-hour game for a resource manager game for a city manager.</li>
+                    <li>Engineered a dual-perspective camera system using Cinemachine, enabling seamless transitions between a 3D first-person character controller and a strategic top-down tactical view.</li>
+                    <li>Developed a tile-based spawning system that generates environmental resources dynamically based on 2D UI input and predefined coordinate logic.</li>
+                    <li>Programmed a progressive "danger" mechanic within the tile system, utilizing time-based variables to increase hazard intensity as gameplay scales.</li>
+                    <li>Integrated Unity's Character Controller to provide responsive movement for the first-person avatar.</li>
+                    <li>Designed the underlying data architecture to synchronize 2D UI elements with 3D world space, ensuring accurate resource placement and management.</li>
+                </ul>
+            </div>
+
+            <div class="box project-card">
+                <a href="#" id="link-passing-great-white" class="game-link" target="_blank">
+                    <h3>>> PASSING OF THE GREAT WHITE</h3>
+                </a>
+                <ul>
+                    <li>Gameplay Programmer for a mystery visual novel centered on a father and daughter moving to a strange new town.</li>
+                    <li>Developed a dynamic dialogue system featuring interactive text boxes and sequential progression controls.</li>
+                    <li>Programmed custom scene and character transition scripts to handle smooth fade-in and fade-out visual effects.</li>
+                    <li>Utilized TextMeshPro to implement animated, pop-in typography for enhanced narrative delivery.</li>
+                </ul>
+            </div>
+
+            <div class="box project-card">
+                <a href="#" id="link-escape-parking-lot" class="game-link" target="_blank">
+                    <h3>>> ESCAPE THE PARKING LOT</h3>
+                </a>
+                <ul>
+                    <li>Lead Programmer for a 48-hour game developing a first-person action game featuring physics-based vehicular combat and pursuit mechanics.</li>
+                    <li>Programmed hostile vehicle AI utilizing Unity's NavMesh, featuring dynamic pursuit routing and environmental combat logic that allows the player to bait enemies into fatal collisions.</li>
+                    <li>Implemented a physics-based weapon system that destroys vehicles, utilizing trigger collision detection logic to trigger instant destruction upon impact with environmental hazards.</li>
+                    <li>Engineered a dynamic spawner system to manage the instantiation and pacing of multiple pursuing AI enemies.</li>
+                    <li>Configured a first-person player controller by seamlessly integrating Unity's Character Controller with the Cinemachine package.</li>
+                    <li>Scripted a custom camera-state modifier utilizing Cinemachine that dynamically inverts the player's Y-axis mouse controls upon character death.</li>
+                    <li>Developed a robust respawn architecture, utilizing Y-axis boundary checks ("void catchers") to automatically catch and reset the player's transform if they fall out of bounds.</li>
+                    <li>Integrated spatial audio cues and sound effects for enemy vehicles to enhance player situational awareness and gameplay feedback.</li>
+                </ul>
+            </div>
+
+            <div class="box project-card">
+                <a href="#" id="link-blast-rock" class="game-link" target="_blank">
+                    <h3>>> BLAST ROCK</h3>
+                </a>
+                <ul>
+                    <li>Developed a spaceship shooter game in python for a 1-week jam.</li>
+                    <li>Engineered a 2D top-down space shooter utilizing Object-Oriented Programming (OOP) principles in Python, creating modular classes for player, projectile, and enemy asteroid entities.</li>
+                    <li>Developed a responsive multi-directional character controller, integrating frame-rate independent physics (Delta Time) to ensure consistent movement and gameplay speed across varying hardware environments.</li>
+                    <li>Implemented a high-precision collision detection system utilizing Pygame-CE's FRect (floating-point rectangles) and pixel-perfect sprite masks, eliminating the positional rounding errors common in standard integer-based bounding boxes.</li>
+                    <li>Optimized the game loop and memory management by leveraging Pygame Sprite Groups to efficiently handle batch rendering, entity spawning, and collision tracking for high volumes of projectiles and enemies.</li>
+                    <li>Enhanced player experience by developing a real-time survival-tracking UI scoreboard and integrating dynamic audio feedback, including background music and synchronized sound effects for weapon firing and entity destruction.</li>
+                </ul>
+            </div>
+
+            <div class="box project-card">
+                <a href="#" id="link-sky-slime" class="game-link" target="_blank">
+                    <h3>>> SKY SLIME</h3>
+                </a>
+                <ul>
+                    <li>Made slime character with 3rd person character controller with blueprints</li>
+                    <li>Made a timer with C++ and blueprints</li>
+                    <li>Made a dynamic day and night cycle with blueprints</li>
+                    <li>Made block break platform that breaks when player encounters said platform</li>
+                    <li>Made character glow mechanic that swaps the texture of the slime to an emissive texture</li>
+                    <li>Added a death counter with blueprints</li>
+                    <li>Added start cutscene with blueprints</li>
+                    <li>Added a bunch of sound effects in the game from background music, character movement and ambience</li>
+                    <li>Added death magma block with blueprints</li>
+                    <li>Added level transporter which utilizes blueprint</li>
+                    <li>Added fireplace spawn point system with blueprints</li>
+                    <li>Made a ray casting object that needed to be hit that is constantly moving requiring skill from the player</li>
+                    <li>Added Ui, menu Ui, controls Ui, end screen Ui</li>
+                    <li>Made game level which includes the start level easy level, hard level and end</li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- UNIVERSITY PROJECTS -->
+    <section id="uni-projects">
+        <h2 class="section-title">
+            <span>🏫</span> UNIVERSITY PROJECTS
+        </h2>
+        <div class="projects-grid">
+            
+            <div class="box project-card">
+                <h3 style="color: var(--main-color); margin-bottom: 20px;">>> ACADEMIC WORK</h3>
+                
+                <h4 style="color: var(--main-color); margin-bottom: 10px; font-size: 12px;">Max Script (<a href="#" id="link-uni-projects" target="_blank" style="color: var(--link-blue); text-decoration: none;">Watch Video</a>):</h4>
+                <ul>
+                    <li>Using max script, made a city spawner and spawns buildings into predetermined locations and has multiple resets so you can choose a variety of buildings that are stored in an array to be spawned from a drop down menu. The building spawned will be randomised amounts and in random locations so you can regenerate them again if you hate the location.</li>
+                    <li>Add a drop-down menu to change the colours of cars and trucks in the city with the same mechanic as the buildings</li>
+                    <li>Changed Godzilla texture to from a top-down menu to multiple texture presets</li>
+                </ul>
+                
+                <h4 style="color: var(--main-color); margin-top: 25px; margin-bottom: 10px; font-size: 12px;">Tower Defence Game:</h4>
+                <ul>
+                    <li>Learnt how to use object pooler to spawn bullets and enemies.</li>
+                    <li>Learnt how to use waypoints to make paths.</li>
+                    <li>Learnt how to use game managers to handle multiple functions.</li>
+                    <li>Made 2 levels with multiple paths</li>
+                    <li>Made a tower that shoots glue to slow down enemies</li>
+                    <li>Added different types of that requires certain towers to target them</li>
+                    <li>Made in Unity</li>
+                </ul>
+                
+                <h4 style="color: var(--main-color); margin-top: 25px; margin-bottom: 10px; font-size: 12px;">Virtual Reality Game:</h4>
+                <ul>
+                    <li>Added ai characters in the game with convai where players can interact with</li>
+                    <li>Added a timer that teleports the player to the next level</li>
+                    <li>Added a car spawner to simulate simple traffic on a highway by instantiating a bunch of car prefabs</li>
+                    <li>Added day night cycle by moving the skybox and also swapping the texture of it</li>
+                    <li>Made main map which is a city and an apartment and start level map which is a bar</li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- EXTRAS (EDUCATION & ART TOOLS) -->
+    <section id="extras">
+        <h2 class="section-title">
+            <span>🎓</span> EXTRAS
+        </h2>
+        <div class="projects-grid">
+            
+            <div class="box">
+                <h3 style="color: var(--main-color); margin-bottom: 20px;">>> ASIA PACIFIC UNIVERSITY (2023-2025)</h3>
+                <p style="margin-bottom: 25px;">
+                Pursuing a degree in Bcs Computer Science in Games Development. Subjects learnt Computer Games High Concept, Basic 3d Computer Character Modelling, Game Engines, Analogue Games, Imaging and Special Effects, Computer Graphics, Believable Models for Game and Virtual Reality Mathematics for Computer Graphics, Programming For Data Analysis, Computer Games Design: Production and Testing, Mathematical Concept for Computing, Computer Games Level Design, Computer Games Design Documentation, Introduction to Object Oriented Programming, Programming with Python, and Introduction to Graphics and Basic 3D Applications.</p>
+                
+                <h3 style="color: var(--main-color); margin-bottom: 15px;">>> 3D & DIGITAL ART TOOLS</h3>
+                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                    <span style="border: 1px solid var(--main-color); padding: 8px 12px; font-size: 10px; color: var(--main-color);">BLENDER</span>
+                    <span style="border: 1px solid var(--main-color); padding: 8px 12px; font-size: 10px; color: var(--main-color);">3DS MAX</span>
+                    <span style="border: 1px solid var(--main-color); padding: 8px 12px; font-size: 10px; color: var(--main-color);">ZBRUSH</span>
+                    <span style="border: 1px solid var(--main-color); padding: 8px 12px; font-size: 10px; color: var(--main-color);">ADOBE SUBSTANCE PAINTER</span>
+                    <span style="border: 1px solid var(--main-color); padding: 8px 12px; font-size: 10px; color: var(--main-color);">ADOBE PHOTOSHOP</span>
                 </div>
             </div>
 
@@ -492,16 +728,16 @@
         <div class="box contact-box">
             <p>READY TO TEAM UP? INSERT COIN OR CLICK BELOW.</p>
             <div class="btn-container">
-                <a href="#" class="btn">ITCH.IO</a>
-                <a href="#" class="btn">ARTSTATION</a>
-                <a href="#" class="btn">GITHUB</a>
-                <a href="#" class="btn">EMAIL</a>
+                <a href="#" id="link-itch-io" class="btn" target="_blank">ITCH.IO</a>
+                <a href="#" id="link-artstation" class="btn" target="_blank">ARTSTATION</a>
+                <!-- <a href="#" id="link-github" class="btn" target="_blank">GITHUB</a> -->
+                <a href="#" id="link-email" class="btn">EMAIL</a>
             </div>
         </div>
     </section>
 
     <footer>
-        <p>HIGH SCORE: 9,999,990 | © 2026 LAKSHMAN.DEV. ALL RIGHTS RESERVED.</p>
+        <p>© 2026 LAKSHMAN NARAIN RAGUBATHY. ALL RIGHTS RESERVED.</p>
     </footer>
 
 </div>
