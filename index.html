@@ -6,12 +6,8 @@
     <title>Lakshman Narain Ragubathy | Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     
-    <!-- ========================================== -->
-    <!-- LINKS CONFIGURATION                        -->
-    <!-- ========================================== -->
     <script>
         const PORTFOLIO_LINKS = {
-             // Game Links (All route to your main itch.io as per the PDF)
             "link-welcome-back": "https://reirann.itch.io/welcome-back",
             "link-the-long-take": "https://lakshmanragu.itch.io/the-long-take",
             "link-scraping-angel": "https://reirann.itch.io/scraping-angel",
@@ -22,11 +18,9 @@
             "link-sky-slime": "https://lakshmanragu.itch.io/sky-slimed",
             "link-uni-projects": "https://youtu.be/Uj-wqgUHFWk",
             
-            // Contact Links
             "link-itch-io": "https://lakshmanragu.itch.io/", 
             "link-email": "mailto:lakshmannarainragubathy@gmail.com",
             "link-artstation": "https://www.artstation.com/lakshmanragu", 
-            // "link-github": "#"  <-- Commented out for now
         };
 
         document.addEventListener("DOMContentLoaded", () => {
@@ -38,10 +32,28 @@
                 }
             }
 
-            // Generate Magenta Particles
+            // Generate Twinkling Stars Background
+            const starsContainer = document.getElementById('stars-bg');
+            const starCount = 150;
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                const size = Math.random() * 2.5 + 0.5;
+                star.style.cssText = `
+                    width: ${size}px; 
+                    height: ${size}px;
+                    left: ${Math.random() * 100}vw;
+                    top: ${Math.random() * 100}vh;
+                    --a: ${Math.random() * 0.5 + 0.1};
+                    --d: ${Math.random() * 3 + 2}s;
+                    animation-delay: ${Math.random() * 4}s;
+                `;
+                starsContainer.appendChild(star);
+            }
+
+            // Generate Magenta Floating Particles
             const particlesContainer = document.getElementById('particles');
             const particleCount = 35; 
-            
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'ender-particle';
@@ -54,17 +66,102 @@
                 
                 particlesContainer.appendChild(particle);
             }
+
+            // ─── PIXEL CURSOR TRAIL ───
+            let lastTrail = 0;
+            document.addEventListener('mousemove', e => {
+                const now = Date.now();
+                if (now - lastTrail < 60) return;
+                lastTrail = now;
+                const trail = document.createElement('div');
+                trail.style.cssText = `
+                    position:fixed; pointer-events:none; z-index:999;
+                    width:4px; height:4px; border-radius:0;
+                    background:rgba(255, 0, 127, 0.6);
+                    left:${e.clientX}px; top:${e.clientY}px;
+                    transition:opacity 0.4s;
+                `;
+                document.body.appendChild(trail);
+                setTimeout(() => { trail.style.opacity = '0'; }, 50);
+                setTimeout(() => trail.remove(), 450);
+            });
+
+            // ─── DRAGON BREATH PARTICLES ON CLICK ───
+            document.addEventListener('click', e => {
+                for (let i = 0; i < 12; i++) {
+                    const p = document.createElement('div');
+                    p.className = 'burst-particle';
+                    const angle = (Math.random() * 360) * Math.PI / 180;
+                    const dist = Math.random() * 80 + 30;
+                    const isMagenta = Math.random() > 0.5;
+                    p.style.cssText = `
+                        left: ${e.clientX}px; 
+                        top: ${e.clientY}px;
+                        --px: ${Math.cos(angle) * dist}px;
+                        --py: ${Math.sin(angle) * dist}px;
+                        background: ${isMagenta ? 'var(--main-color)' : 'var(--link-blue)'};
+                        box-shadow: 0 0 8px ${isMagenta ? 'var(--main-color)' : 'var(--link-blue)'};
+                    `;
+                    document.body.appendChild(p);
+                    setTimeout(() => p.remove(), 1400);
+                }
+            });
+
+            // ─── END PORTAL VOID STARS ───
+            const portalVoid = document.getElementById('end-portal-void');
+            
+            if (portalVoid) {
+                for (let i = 0; i < 75; i++) {
+                    const ps = document.createElement('div');
+                    ps.className = 'portal-star';
+                    ps.style.left = Math.random() * 100 + '%';
+                    ps.style.top = Math.random() * 100 + '%';
+                    
+                    const colors = ['#ff007f', '#00d4ff', '#ffffff', '#7b2fbe', '#9955ff'];
+                    ps.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    
+                    const size = Math.random() * 3 + 1;
+                    ps.style.width = size + 'px';
+                    ps.style.height = size + 'px';
+                    
+                    ps.style.animationDuration = (Math.random() * 4 + 3) + 's';
+                    ps.style.animationDelay = (Math.random() * 4) + 's';
+                    
+                    const driftX = (Math.random() * 40 - 20) + 'px';
+                    const driftY = (Math.random() * 40 - 20) + 'px';
+                    ps.style.setProperty('--dx', driftX);
+                    ps.style.setProperty('--dy', driftY);
+                    
+                    portalVoid.appendChild(ps);
+                }
+            }
+
+            // Accordion / Collapsible Logic
+            const collapsibles = document.querySelectorAll('.collapsible-btn');
+            collapsibles.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const content = this.nextElementSibling;
+                    const icon = this.querySelector('.toggle-icon');
+                    
+                    if (content.classList.contains('active')) {
+                        content.classList.remove('active');
+                        icon.textContent = 'V'; 
+                    } else {
+                        content.classList.add('active');
+                        icon.textContent = '^'; 
+                    }
+                });
+            });
         });
     </script>
-    <!-- ========================================== -->
-
     <style>
         :root {
             --bg-color: #050505;
-            --main-color: #ff007f; /* Hot Pink / Neon Magenta */
-            --text-dim: #e6e6e6; /* Brighter grey for high readability */
-            --text-bright: #ffffff; /* Crisp white, NO neon glow */
-            --link-blue: #00d4ff; /* Arcade Blue */
+            --main-color: #ff007f; 
+            --text-dim: #e6e6e6; 
+            --text-bright: #ffffff; 
+            --text-muted: #888888;
+            --link-blue: #00d4ff; 
             --neon-glow: 0 0 8px rgba(255, 0, 127, 0.6);
             --blue-glow: 0 0 8px rgba(0, 212, 255, 0.6);
         }
@@ -86,7 +183,57 @@
             position: relative;
         }
 
-        /* --- PARTICLES --- */
+        /* --- VOID GLOW BACKGROUND --- */
+        #void-bg {
+            position: fixed; 
+            inset: 0; 
+            z-index: -3;
+            background: radial-gradient(ellipse at 50% 50%, rgba(255, 0, 127, 0.15) 0%, var(--bg-color) 60%, #000 100%);
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        /* --- STARS BACKGROUND --- */
+        #stars-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2; 
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            background: #ffffff;
+            border-radius: 50%;
+            animation: twinkle var(--d) ease-in-out infinite alternate;
+        }
+
+        @keyframes twinkle {
+            from { opacity: var(--a); transform: scale(1); }
+            to { opacity: 1; transform: scale(1.6); }
+        }
+
+        /* --- BURST PARTICLES (CLICK) --- */
+        .burst-particle {
+            position: fixed; 
+            pointer-events: none; 
+            z-index: 9998;
+            width: 6px; 
+            height: 6px;
+            border-radius: 1px;
+            animation: particleFade 1.4s ease-out forwards;
+        }
+
+        @keyframes particleFade {
+            0%   { opacity: 1; transform: translate(0,0) scale(1); }
+            100% { opacity: 0; transform: translate(var(--px), var(--py)) scale(0); }
+        }
+
+        /* --- FLOATING PARTICLES --- */
         #particles {
             position: fixed;
             top: 0;
@@ -141,7 +288,7 @@
 
         /* --- LAYOUT & CONTAINERS --- */
         .container {
-            max-width: 1400px; /* Stretched wide for widescreen */
+            max-width: 1400px; 
             width: 100%;
             margin: 0 auto;
         }
@@ -171,7 +318,7 @@
             backdrop-filter: blur(2px);
         }
 
-        /* --- HEADER & PACMAN ART --- */
+        /* --- HEADER & GLOWING ENDERMAN --- */
         header {
             text-align: center;
             margin-bottom: 40px;
@@ -196,6 +343,38 @@
             text-shadow: var(--neon-glow);
         }
 
+        .hero-enderman-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+            margin-bottom: 40px;
+            animation: hoverFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes hoverFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        .eye-glow-ring {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%,-50%);
+            width: 200px; height: 200px; 
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 0, 127, 0.35) 0%, transparent 70%);
+            animation: eyePulse 2s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes eyePulse {
+            0%,100% { transform: translate(-50%,-50%) scale(1); opacity: 0.6; }
+            50%      { transform: translate(-50%,-50%) scale(1.5); opacity: 1; }
+        }
+
         .arcade-animation {
             display: flex;
             justify-content: center;
@@ -205,7 +384,6 @@
             flex-wrap: wrap; 
         }
 
-        /* Upgraded Pacman Animation */
         .pacman {
             position: relative;
             width: 30px;
@@ -286,6 +464,49 @@
             text-shadow: var(--neon-glow);
         }
 
+        /* --- ENDERMAN CSS (Used in Hero & About) --- */
+        .enderman {
+            width: 80px;
+            height: 80px;
+            background: #111; 
+            position: relative;
+            border: 2px solid #222;
+            z-index: 1;
+        }
+
+        .enderman::before, .enderman::after {
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 8px;
+            background: var(--main-color); 
+            top: 40px;
+            animation: eyesPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes eyesPulse {
+            0%, 100% { box-shadow: 0 0 8px var(--main-color), inset 0 0 2px #fff; }
+            50% { box-shadow: 0 0 24px var(--main-color), 0 0 35px var(--main-color), inset 0 0 5px #fff; }
+        }
+
+        .enderman::before { left: 5px; }
+        .enderman::after { right: 5px; }
+
+        .big-enderman {
+            width: 140px;
+            height: 140px;
+            border-width: 4px;
+        }
+        
+        .big-enderman::before, .big-enderman::after {
+            width: 38px;
+            height: 14px;
+            top: 70px;
+        }
+        
+        .big-enderman::before { left: 10px; }
+        .big-enderman::after { right: 10px; }
+
         /* --- PLAYER SELECT (ABOUT) --- */
         .player-content {
             display: flex;
@@ -300,27 +521,6 @@
             flex-shrink: 0; 
         }
 
-        .enderman {
-            width: 80px;
-            height: 80px;
-            background: #111; 
-            position: relative;
-            border: 2px solid #222;
-        }
-
-        .enderman::before, .enderman::after {
-            content: '';
-            position: absolute;
-            width: 22px;
-            height: 8px;
-            background: var(--main-color); 
-            top: 40px;
-            box-shadow: 0 0 8px var(--main-color), inset 0 0 2px #fff;
-        }
-
-        .enderman::before { left: 5px; }
-        .enderman::after { right: 5px; }
-
         .player-stats h2 {
             color: var(--main-color);
             font-size: clamp(12px, 3vw, 16px);
@@ -332,20 +532,84 @@
             color: var(--text-dim);
         }
 
-        /* --- CARDS GRID (STRICT 1 COLUMN STRETCHED) --- */
+        /* --- CARDS & COLLAPSIBLES --- */
         .projects-grid {
             display: grid;
-            grid-template-columns: 1fr; /* Forced to 1 column, stretches full width */
+            grid-template-columns: 1fr;
             gap: 30px;
             width: 100%;
         }
 
-        .project-card h3, .box > h3 {
+        .collapsible-btn {
+            background: none;
+            border: none;
+            color: var(--main-color);
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            font-family: 'Press Start 2P', cursive;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-text-content {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex-grow: 1;
+        }
+
+        .collapsible-btn h3 {
             font-size: clamp(12px, 3vw, 14px);
             word-wrap: break-word;
-            margin: 0 0 15px 0;
-            color: var(--main-color); 
+            margin: 0;
             line-height: 1.4;
+            transition: all 0.2s ease;
+        }
+
+        .overview-text {
+            color: var(--text-muted);
+            font-size: clamp(8px, 2vw, 10px);
+            line-height: 1.5;
+            margin: 0;
+            transition: color 0.2s ease;
+        }
+
+        .collapsible-btn:hover h3, .collapsible-btn:hover .toggle-icon {
+            color: var(--link-blue);
+            text-shadow: var(--blue-glow);
+        }
+
+        .collapsible-btn:hover .overview-text {
+            color: var(--text-dim);
+        }
+
+        .toggle-icon {
+            font-size: 14px;
+            color: var(--main-color);
+            flex-shrink: 0;
+            margin-top: 2px; 
+            transition: all 0.2s ease;
+        }
+
+        .collapsible-content {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed rgba(255, 0, 127, 0.4);
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .collapsible-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .game-link {
@@ -353,19 +617,15 @@
             text-decoration: none;
             display: inline-block;
             margin-bottom: 15px;
+            font-size: 12px;
             transition: all 0.2s ease;
         }
 
-        .game-link h3 {
-            color: var(--link-blue);
-        }
-
-        .game-link:hover h3 {
+        .game-link:hover {
             color: #fff;
             text-shadow: var(--blue-glow);
         }
 
-        /* Lists and Paragraphs inside Cards */
         .project-card ul {
             color: var(--text-dim);
             padding-left: 20px;
@@ -383,7 +643,6 @@
             color: var(--text-dim);
         }
 
-        /* Emphasized Bold Text in Lists (Magenta & Separated) */
         .project-card strong {
             color: var(--main-color);
             font-weight: bold;
@@ -391,21 +650,194 @@
             margin-bottom: 5px;
         }
 
-        /* --- CONTINUE (FOOTER) --- */
-        .contact-box {
+        /* --- CONTINUE (FOOTER) / NEW CUSTOM GRID PORTAL --- */
+        .end-portal-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 40px 0;
+            width: 100%;
+        }
+
+        .portal-grid {
+            /* Responsive Pixel Size */
+            --px: clamp(2.5px, 1vw, 6px); 
+            
+            --end-stone: #dfebaa;
+            --end-stone-dark: #c1d185;
+            --frame-dark: #12332e;
+            --frame-light: #2c7a6b;
+            --hole: #0a1714;
+
+             /* Moody, Dark Green Eye ("mgreen") */
+            --eye-base: #0f2e1b;   /* Dark outer iris */
+            --eye-core: #1c5230;   /* Mid forest green */
+            --eye-pupil: #2db85c;  /* Glowing radioactive green */
+            --eye-dark: #06120a;   /* Deep shadow / border */
+
+            display: grid;
+            grid-template-columns: repeat(5, calc(var(--px) * 16));
+            grid-template-rows: repeat(5, calc(var(--px) * 16));
+            gap: calc(var(--px) * 0.2); 
+        }
+
+        .portal-center {
+            grid-column: 2 / 5; 
+            grid-row: 2 / 5;    
+            background: #020005; /* Void interior */
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 0 calc(var(--px)*8) #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+        }
+
+        .end-portal-frame {
+            width: 100%;
+            height: 100%;
+            background-color: var(--end-stone);
+            position: relative;
+            image-rendering: pixelated;
+            
+            background-image: 
+                linear-gradient(to bottom, transparent 15%, var(--frame-dark) 15%, var(--frame-dark) 85%, transparent 85%),
+                linear-gradient(to right, var(--frame-dark) 15%, transparent 15%, transparent 85%, var(--frame-dark) 85%),
+                linear-gradient(var(--frame-light), var(--frame-light));
+                
+            background-size: 100% 100%, 100% 100%, 70% 70%;
+            background-position: center, center, center;
+            background-repeat: no-repeat;
+            
+            box-shadow: inset 0 0 0 calc(var(--px) * 1) var(--end-stone-dark);
+            z-index: 2;
+        }
+
+        .end-portal-frame.top-row { transform: rotate(180deg); }
+        .end-portal-frame.left-col { transform: rotate(90deg); }
+        .end-portal-frame.right-col { transform: rotate(-90deg); }
+
+        .end-portal-frame::before {
+            content: '';
+            position: absolute;
+            top: 25%; left: 25%;
+            width: 50%; height: 50%;
+            background-color: var(--hole);
+        }
+
+        /* Pixel Art Eye of Ender */
+        .eye-of-ender {
+            position: absolute;
+            top: 25%; left: 25%;
+            width: calc(var(--px) * 8); 
+            height: calc(var(--px) * 8);
+            background-color: var(--eye-dark);
+            
+            background-image:
+                /* White Glare */
+                linear-gradient(#ffffff, #ffffff),
+                /* Pupil / Inner Iris */
+                linear-gradient(var(--eye-pupil), var(--eye-pupil)),
+                /* Core */
+                linear-gradient(var(--eye-core), var(--eye-core)),
+                /* Base Iris */
+                linear-gradient(var(--eye-base), var(--eye-base));
+                
+            background-size:
+                calc(var(--px) * 1) calc(var(--px) * 1), 
+                calc(var(--px) * 2) calc(var(--px) * 4), 
+                calc(var(--px) * 4) calc(var(--px) * 6), 
+                calc(var(--px) * 6) calc(var(--px) * 8); 
+                
+            background-position:
+                calc(var(--px) * 4) calc(var(--px) * 2), 
+                center,
+                center,
+                center;
+                
+            background-repeat: no-repeat;
+
+            /* Steady Breathing Glow */
+            animation: eyePulseSteady 2s infinite alternate ease-in-out;
+        }
+
+        @keyframes eyePulseSteady {
+            0% { filter: drop-shadow(0 0 calc(var(--px)*0.5) var(--eye-pupil)) brightness(1); }
+            100% { filter: drop-shadow(0 0 calc(var(--px)*2.5) var(--frame-light)) brightness(1.3); }
+        }
+
+        /* Grid Positioning for frames */
+        .f-top-1 { grid-column: 2; grid-row: 1; }
+        .f-top-2 { grid-column: 3; grid-row: 1; }
+        .f-top-3 { grid-column: 4; grid-row: 1; }
+
+        .f-left-1 { grid-column: 1; grid-row: 2; }
+        .f-left-2 { grid-column: 1; grid-row: 3; }
+        .f-left-3 { grid-column: 1; grid-row: 4; }
+
+        .f-right-1 { grid-column: 5; grid-row: 2; }
+        .f-right-2 { grid-column: 5; grid-row: 3; }
+        .f-right-3 { grid-column: 5; grid-row: 4; }
+
+        .f-bot-1 { grid-column: 2; grid-row: 5; }
+        .f-bot-2 { grid-column: 3; grid-row: 5; }
+        .f-bot-3 { grid-column: 4; grid-row: 5; }
+
+        /* Generated via JS inside the void */
+        .portal-star {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0;
+            animation: portalPan linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes portalPan {
+            0% { transform: scale(0.5) translate(0, 0); opacity: 0; }
+            20% { opacity: 0.8; }
+            80% { opacity: 0.8; }
+            100% { transform: scale(1.5) translate(var(--dx), var(--dy)); opacity: 0; }
+        }
+
+        /* Portal interior content (Text & Buttons) */
+        .portal-content {
+            position: absolute;
+            inset: 0;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.4); 
             text-align: center;
         }
 
-        .contact-box p {
+        .portal-content p {
             margin-bottom: 20px;
-            color: var(--text-dim);
+            color: #fff;
+            text-shadow: 2px 2px 0 #000;
+            font-size: clamp(8px, 1.5vw, 12px);
+            line-height: 1.6;
         }
 
-        .btn-container {
+        .portal-content .btn-container {
             display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
+            flex-direction: column; 
+            gap: 10px;
+            width: 80%;
+            max-width: 200px;
+        }
+
+        .portal-content .btn {
+            width: 100%;
+            max-width: none;
+            background: rgba(0,0,0,0.8);
+            border-color: var(--main-color);
+            padding: 10px 15px;
+            font-size: clamp(7px, 1.2vw, 10px);
         }
 
         .btn {
@@ -462,36 +894,33 @@
             .avatar-box {
                 margin-bottom: 10px;
             }
-            
-            .btn-container {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .btn {
-                width: 100%;
-                max-width: none;
-            }
         }
     </style>
 </head>
 <body>
 
-<!-- Particle Container -->
+<div id="void-bg"></div>
+<div id="stars-bg"></div>
 <div id="particles"></div>
 
 <div class="container">
 
     <header>
+        <div class="hero-enderman-container">
+            <div class="eye-glow-ring"></div>
+            <div class="enderman big-enderman"></div>
+        </div>
+
         <div class="dot-container">
             <div class="deco-dot"></div>
             <div class="deco-dot"></div>
             <div class="deco-dot"></div>
             <div class="deco-dot"></div>
         </div>
+        
         <h1>LAKSHMAN NARAIN RAGUBATHY</h1>
-        <!-- <div class="subtitle">GAMEPLAY PROGRAMMER • LEAD PROGRAMMER • 3D ARTIST • CS STUDENT</div> -->
         <div class="subtitle">GAMEPLAY PROGRAMMER</div>
+        
         <div class="arcade-animation">
             <div class="pacman"></div>
             <div class="dot"></div>
@@ -508,7 +937,6 @@
         <a href="#extras">EXTRAS</a>
     </div>
 
-    <!-- PLAYER SELECT -->
     <section id="player">
         <h2 class="section-title">
             <span>👾</span> PLAYER SELECT
@@ -526,7 +954,6 @@
 
     <div class="section-divider"></div>
 
-    <!-- SOFTWARE -->
     <section id="software">
         <h2 class="section-title">
             <span>⚡</span> SOFTWARE
@@ -534,269 +961,71 @@
         <div class="projects-grid">
             
             <div class="box project-card">
-                <h3>>> UNITY (INTERMEDIATE)</h3>
-                <ul>
-                    <li><strong>AI & Pathfinding Systems:</strong> Engineered complex enemy AI using Unity's AI Navigation package and NavMesh. Developed dynamic patrol routing, waypoint navigation, and player-detection chase mechanics. Implemented specialized line-of-sight logic to freeze enemy movement when viewed by the player's camera, alongside automated fail-safe routines to resolve pathfinding deadlocks. Programmed hostile vehicle AI with environmental combat logic that allows players to bait enemies into fatal collisions.</li>
-                    <li><strong>Character Controllers & Physics:</strong> Built physics-based 2D character locomotion utilizing Rigidbody2D and Capsule Collider2D, integrating scalable mechanics for dashing, wall sliding, wall jumping, and melee combat. Configured smooth, jitter-free 3D player controllers by seamlessly integrating Unity's Character Controller with the Cinemachine package.</li>
-                    <li><strong>Core Systems & Architecture:</strong> Designed object pooling systems for optimized instantiation of projectiles and enemies. Engineered a dual-perspective camera system for seamless transitions between 3D first-person and strategic top-down tactical views. Developed custom game managers, tile-based dynamic spawning systems based on 2D UI input, and progressive time-based hazard mechanics. Created robust respawn architectures utilizing Y-axis boundary checks (void catchers) to automatically catch and reset the player's transform if they fall out of bounds.</li>
-                    <li><strong>Visuals, Audio, & Narrative:</strong> Utilized TextMeshPro to implement animated, pop-in typography for dynamic dialogue systems featuring interactive text boxes. Engineered dynamic jumpscare sequences utilizing camera hierarchies and custom scene transition scripts. Created custom sound managers utilizing dictionary and array structures for randomized and categorized audio playback, as well as integrating spatial audio cues. Designed shader graphs for custom lighting effects and managed particle systems with collision detection for environmental effects. Integrated external tools like Convai for AI character interactions within VR environments.</li>
-                </ul>
+                <button class="collapsible-btn">
+                    <div class="btn-text-content">
+                        <h3>>> UNITY (INTERMEDIATE)</h3>
+                        <p class="overview-text">Engineered complex AI, fluid character controllers, and modular game architectures.</p>
+                    </div>
+                    <span class="toggle-icon">V</span>
+                </button>
+                <div class="collapsible-content">
+                    <ul>
+                        <li><strong>AI & Pathfinding Systems:</strong> Engineered complex enemy AI using Unity's AI Navigation package and NavMesh. Developed dynamic patrol routing, waypoint navigation, and player-detection chase mechanics. Implemented specialized line-of-sight logic to freeze enemy movement when viewed by the player's camera, alongside automated fail-safe routines to resolve pathfinding deadlocks. Programmed hostile vehicle AI with environmental combat logic that allows players to bait enemies into fatal collisions.</li>
+                        <li><strong>Character Controllers & Physics:</strong> Built physics-based 2D character locomotion utilizing Rigidbody2D and Capsule Collider2D, integrating scalable mechanics for dashing, wall sliding, wall jumping, and melee combat. Configured smooth, jitter-free 3D player controllers by seamlessly integrating Unity's Character Controller with the Cinemachine package.</li>
+                        <li><strong>Core Systems & Architecture:</strong> Designed object pooling systems for optimized instantiation of projectiles and enemies. Engineered a dual-perspective camera system for seamless transitions between 3D first-person and strategic top-down tactical views. Developed custom game managers, tile-based dynamic spawning systems based on 2D UI input, and progressive time-based hazard mechanics. Created robust respawn architectures utilizing Y-axis boundary checks (void catchers) to automatically catch and reset the player's transform if they fall out of bounds.</li>
+                        <li><strong>Visuals, Audio, & Narrative:</strong> Utilized TextMeshPro to implement animated, pop-in typography for dynamic dialogue systems featuring interactive text boxes. Engineered dynamic jumpscare sequences utilizing camera hierarchies and custom scene transition scripts. Created custom sound managers utilizing dictionary and array structures for randomized and categorized audio playback, as well as integrating spatial audio cues. Designed shader graphs for custom lighting effects and managed particle systems with collision detection for environmental effects. Integrated external tools like Convai for AI character interactions within VR environments.</li>
+                    </ul>
+                </div>
             </div>
 
             <div class="box project-card">
-                <h3>>> UNREAL ENGINE 5 (INTERMEDIATE)</h3>
-                <ul>
-                    <li><strong>Core Logic & Systems:</strong> Utilized hybrid development approaches combining C++ and Blueprints Visual Scripting to engineer state-driven gameplay loops and custom timer systems.</li>
-                    <li><strong>Player Mechanics:</strong> Developed custom 3rd-person character controllers with interactive, state-driven mechanics. Implemented features such as emissive texture swapping triggered by environmental interactions (e.g., character glowing) and breakable platforms.</li>
-                    <li><strong>World Building & Level Design:</strong> Engineered dynamic day and night cycles utilizing skybox manipulation and texture swapping. Created level transporters, interactive environmental hazards (like death magma blocks and moving ray-casted objects), and localized fireplace spawn-point systems. Designed comprehensive UI elements, including menus, controls, and end screens, alongside multiple sequenced game levels and start cutscenes. Integrated diverse sound effects encompassing background music, character movement, and ambient audio.</li>
-                </ul>
+                <button class="collapsible-btn">
+                    <div class="btn-text-content">
+                        <h3>>> UNREAL ENGINE 5 (INTERMEDIATE)</h3>
+                        <p class="overview-text">Developed state-driven mechanics, dynamic environments, and custom 3rd-person controllers.</p>
+                    </div>
+                    <span class="toggle-icon">V</span>
+                </button>
+                <div class="collapsible-content">
+                    <ul>
+                        <li><strong>Core Logic & Systems:</strong> Utilized hybrid development approaches combining C++ and Blueprints Visual Scripting to engineer state-driven gameplay loops and custom timer systems.</li>
+                        <li><strong>Player Mechanics:</strong> Developed custom 3rd-person character controllers with interactive, state-driven mechanics. Implemented features such as emissive texture swapping triggered by environmental interactions (e.g., character glowing) and breakable platforms.</li>
+                        <li><strong>World Building & Level Design:</strong> Engineered dynamic day and night cycles utilizing skybox manipulation and texture swapping. Created level transporters, interactive environmental hazards (like death magma blocks and moving ray-casted objects), and localized fireplace spawn-point systems. Designed comprehensive UI elements, including menus, controls, and end screens, alongside multiple sequenced game levels and start cutscenes. Integrated diverse sound effects encompassing background music, character movement, and ambient audio.</li>
+                    </ul>
+                </div>
             </div>
 
             <div class="box project-card">
-                <h3>>> PYTHON & PYGAME (INTERMEDIATE)</h3>
-                <ul>
-                    <li><strong>Architecture & Optimization:</strong> Leveraged Object-Oriented Programming (OOP) principles to create modular classes for entities such as players, projectiles, and enemies. Optimized game loops and memory management by utilizing Pygame Sprite Groups for efficient batch rendering, entity spawning, and continuous collision tracking for high volumes of assets.</li>
-                    <li><strong>Physics & Collision Systems:</strong> Developed responsive, multi-directional character controllers integrated with frame-rate independent physics (Delta Time) to ensure consistent movement speeds across different hardware. Implemented high-precision collision detection utilizing Pygame-CE's FRect (floating-point rectangles) and pixel-perfect sprite masks to eliminate positional rounding errors common in standard integer-based bounding boxes. Built continuous rotational transforms and basic AI systems that actively follow the player.</li>
-                    <li><strong>UI & Feedback Integration:</strong> Enhanced the player experience by developing real-time survival-tracking UI scoreboards and integrating dynamic audio feedback, including background music and synchronized sound effects for weapon firing and entity destruction.</li>
-                </ul>
+                <button class="collapsible-btn">
+                    <div class="btn-text-content">
+                        <h3>>> PYTHON & PYGAME (INTERMEDIATE)</h3>
+                        <p class="overview-text">Built optimized, physics-based 2D entities and robust collision systems using OOP.</p>
+                    </div>
+                    <span class="toggle-icon">V</span>
+                </button>
+                <div class="collapsible-content">
+                    <ul>
+                        <li><strong>Architecture & Optimization:</strong> Leveraged Object-Oriented Programming (OOP) principles to create modular classes for entities such as players, projectiles, and enemies. Optimized game loops and memory management by utilizing Pygame Sprite Groups for efficient batch rendering, entity spawning, and continuous collision tracking for high volumes of assets.</li>
+                        <li><strong>Physics & Collision Systems:</strong> Developed responsive, multi-directional character controllers integrated with frame-rate independent physics (Delta Time) to ensure consistent movement speeds across different hardware. Implemented high-precision collision detection utilizing Pygame-CE's FRect (floating-point rectangles) and pixel-perfect sprite masks to eliminate positional rounding errors common in standard integer-based bounding boxes. Built continuous rotational transforms and basic AI systems that actively follow the player.</li>
+                        <li><strong>UI & Feedback Integration:</strong> Enhanced the player experience by developing real-time survival-tracking UI scoreboards and integrating dynamic audio feedback, including background music and synchronized sound effects for weapon firing and entity destruction.</li>
+                    </ul>
+                </div>
             </div>
 
             <div class="box project-card">
-                <h3>>> MAXSCRIPT & PROCEDURAL TOOLS (BEGINNER)</h3>
-                <ul>
-                    <li><strong>Procedural Tool Development:</strong> Engineered custom procedural environment generators capable of dynamically spawning city elements such as buildings and vehicles into predetermined locations.</li>
-                    <li><strong>Data Structures & Logic:</strong> Utilized array-based logic to store, manage, and randomize structural elements, locations, and texture presets.</li>
-                    <li><strong>UI Integration & Customization:</strong> Developed custom drop-down menus within the tool's UI to allow real-time color and texture swapping (e.g., modifying car and truck colors, or swapping character textures to multiple presets). Implemented reset functionality allowing users to regenerate randomized amounts and locations of spawned entities on demand to iterate on level layouts.</li>
-                </ul>
-            </div>
-
-        </div>
-    </section>
-
-    <div class="section-divider"></div>
-
-     <!-- GAMES -->
-    <section id="games">
-        <h2 class="section-title">
-            <span>📺</span> GAMES
-        </h2>
-        <div class="projects-grid">
-
-          
-
-            <div class="box project-card">
-                <a href="#" id="link-sky-slime" class="game-link" target="_blank">
-                    <h3>>> SKY SLIME</h3>
-                </a>
-                <ul>
-                    <li>Made slime character with 3rd person character controller with blueprints</li>
-                    <li>Made a timer with C++ and blueprints</li>
-                    <li>Made a dynamic day and night cycle with blueprints</li>
-                    <li>Made block break platform that breaks when player encounters said platform</li>
-                    <li>Made character glow mechanic that swaps the texture of the slime to an emissive texture</li>
-                    <li>Added a death counter with blueprints</li>
-                    <li>Added start cutscene with blueprints</li>
-                    <li>Added a bunch of sound effects in the game from background music, character movement and ambience</li>
-                    <li>Added death magma block with blueprints</li>
-                    <li>Added level transporter which utilizes blueprint</li>
-                    <li>Added fireplace spawn point system with blueprints</li>
-                    <li>Made a ray casting object that needed to be hit that is constantly moving requiring skill from the player</li>
-                    <li>Added Ui, menu Ui, controls Ui, end screen Ui</li>
-                    <li>Made game level which includes the start level easy level, hard level and end</li>
-                </ul>
-            </div>
-
-            <div class="box project-card">
-                <a href="#" id="link-the-long-take" class="game-link" target="_blank">
-                    <h3>>> THE LONG TAKE</h3>
-                </a>
-                <ul>
-                    <li>Lead Gameplay Programmer for a 2d platformer of a stuntman going through the motions dodging obstacles and weaving through enemies.</li>
-                    <li>Developed a robust 2D player controller utilizing Rigidbody2D and CapsuleCollider2D, integrating scalable mechanics for dashing, wall sliding, wall jumping, and melee combat, with built-in architecture for modular ability expansion like double jump.</li>
-                    <li>Used particle system to make blood effects whenever the layer dies or kills an enemy it will splatter blood everywhere. Also enabled collision on the particles so that it will stick to the floor. After a while the particle system will be disabled.</li>
-                    <li>Made a sound manager that can lay sounds randomised but also categorised. For example, if you want multiple melee sounds it calls the melee sound from an internal array that has multiple melee sfx. It's basically a bunch of arrays inside a dictionary.</li>
-                    <li>Made a bat enemy that moves up and down and looks at the player.</li>
-                    <li>Made a death screen that appears when the player dies and lays a sequential voice line that later than randomises it.</li>
-                    <li>Used shader graph to add a hollow knight like effect of the light of the player and a glow hurt material.</li>
-                    <li>Configured scene transition logic and trigger volumes to seamlessly route the player to the end credits sequence upon game completion.</li>
-                </ul>
-            </div>
-
-            <div class="box project-card">
-                <a href="#" id="link-scraping-angel" class="game-link" target="_blank">
-                    <h3>>> SCRAPING ANGEL</h3>
-                </a>
-                <ul>
-                    <li>Lead Programmer for a 72-hour game jam, developing a first-person survival horror game featuring a detective pursued by a Weeping Angel-style entity.</li>
-                    <li>Programmed complex enemy AI utilizing Unity's AI Navigation package and NavMesh, featuring dynamic patrol routing and player-detection chase mechanics.</li>
-                    <li>Implemented line-of-sight logic, forcing the AI to freeze its movement whenever it is rendered within the player's camera view.</li>
-                    <li>Developed automated fail-safe routines to resolve AI pathfinding deadlocks and prevent the entity from getting stuck on environmental geometry.</li>
-                    <li>Configured a smooth, jitter-free player controller by integrating Unity's Character Controller with the Cinemachine package.</li>
-                    <li>Designed an object interaction system linked to the game's core objective and win state.</li>
-                    <li>Engineered a dynamic jumpscare sequence utilizing camera hierarchies, seamlessly integrated with a fail-state trigger that routes the player back to the main menu.</li>
-                </ul>
-            </div>
-
-            <div class="box project-card">
-                <a href="#" id="link-welcome-back" class="game-link" target="_blank">
-                    <h3>>> WELCOME BACK</h3>
-                </a>
-                <ul>
-                    <li>Co-programmer on a 5-person team for a 48-hour game jam, developing a 2D pixel art adventure where the player must urgently tidy a messy apartment before an important guest arrives.</li>
-                    <li>Implemented physics-based 2D character locomotion utilizing Unity's Rigidbody2D component.</li>
-                    <li>Integrated character animation states and synchronized audio cues for footstep events.</li>
-                    <li>Engineered the core gameplay loop, developing a custom timer system that directly drives the game's win and loss conditions.</li>
-                </ul>
-            </div>
-
-            <div class="box project-card">
-                <a href="#" id="link-grow-a-city" class="game-link" target="_blank">
-                    <h3>>> GROW A CITY</h3>
-                </a>
-                <ul>
-                    <li>Lead Programmer for a 48-hour game for a resource manager game for a city manager.</li>
-                    <li>Engineered a dual-perspective camera system using Cinemachine, enabling seamless transitions between a 3D first-person character controller and a strategic top-down tactical view.</li>
-                    <li>Developed a tile-based spawning system that generates environmental resources dynamically based on 2D UI input and predefined coordinate logic.</li>
-                    <li>Programmed a progressive "danger" mechanic within the tile system, utilizing time-based variables to increase hazard intensity as gameplay scales.</li>
-                    <li>Integrated Unity's Character Controller to provide responsive movement for the first-person avatar.</li>
-                    <li>Designed the underlying data architecture to synchronize 2D UI elements with 3D world space, ensuring accurate resource placement and management.</li>
-                </ul>
-            </div>
-
-            <div class="box project-card">
-                <a href="#" id="link-blast-rock" class="game-link" target="_blank">
-                    <h3>>> BLAST ROCK</h3>
-                </a>
-                <ul>
-                    <li>Developed a spaceship shooter game in python for a 1-week jam.</li>
-                    <li>Engineered a 2D top-down space shooter utilizing Object-Oriented Programming (OOP) principles in Python, creating modular classes for player, projectile, and enemy asteroid entities.</li>
-                    <li>Developed a responsive multi-directional character controller, integrating frame-rate independent physics (Delta Time) to ensure consistent movement and gameplay speed across varying hardware environments.</li>
-                    <li>Implemented a high-precision collision detection system utilizing Pygame-CE's FRect (floating-point rectangles) and pixel-perfect sprite masks, eliminating the positional rounding errors common in standard integer-based bounding boxes.</li>
-                    <li>Optimized the game loop and memory management by leveraging Pygame Sprite Groups to efficiently handle batch rendering, entity spawning, and collision tracking for high volumes of projectiles and enemies.</li>
-                    <li>Enhanced player experience by developing a real-time survival-tracking UI scoreboard and integrating dynamic audio feedback, including background music and synchronized sound effects for weapon firing and entity destruction.</li>
-                </ul>
-            </div>
-
-           
-
-            <div class="box project-card">
-                <a href="#" id="link-escape-parking-lot" class="game-link" target="_blank">
-                    <h3>>> ESCAPE THE PARKING LOT</h3>
-                </a>
-                <ul>
-                    <li>Lead Programmer for a 48-hour game developing a first-person action game featuring physics-based vehicular combat and pursuit mechanics.</li>
-                    <li>Programmed hostile vehicle AI utilizing Unity's NavMesh, featuring dynamic pursuit routing and environmental combat logic that allows the player to bait enemies into fatal collisions.</li>
-                    <li>Implemented a physics-based weapon system that destroys vehicles, utilizing trigger collision detection logic to trigger instant destruction upon impact with environmental hazards.</li>
-                    <li>Engineered a dynamic spawner system to manage the instantiation and pacing of multiple pursuing AI enemies.</li>
-                    <li>Configured a first-person player controller by seamlessly integrating Unity's Character Controller with the Cinemachine package.</li>
-                    <li>Scripted a custom camera-state modifier utilizing Cinemachine that dynamically inverts the player's Y-axis mouse controls upon character death.</li>
-                    <li>Developed a robust respawn architecture, utilizing Y-axis boundary checks ("void catchers") to automatically catch and reset the player's transform if they fall out of bounds.</li>
-                    <li>Integrated spatial audio cues and sound effects for enemy vehicles to enhance player situational awareness and gameplay feedback.</li>
-                </ul>
-            </div>
-
-             <div class="box project-card">
-                <a href="#" id="link-passing-great-white" class="game-link" target="_blank">
-                    <h3>>> PASSING OF THE GREAT WHITE</h3>
-                </a>
-                <ul>
-                    <li>Gameplay Programmer for a mystery visual novel centered on a father and daughter moving to a strange new town.</li>
-                    <li>Developed a dynamic dialogue system featuring interactive text boxes and sequential progression controls.</li>
-                    <li>Programmed custom scene and character transition scripts to handle smooth fade-in and fade-out visual effects.</li>
-                    <li>Utilized TextMeshPro to implement animated, pop-in typography for enhanced narrative delivery.</li>
-                </ul>
-            </div>
-
-           
-
-      
-
-        </div>
-    </section>
-
-    <div class="section-divider"></div>
-
-    <!-- UNIVERSITY PROJECTS -->
-    <section id="uni-projects">
-        <h2 class="section-title">
-            <span>🏫</span> UNIVERSITY PROJECTS
-        </h2>
-        <div class="projects-grid">
-            
-            <div class="box project-card">
-                <h3 style="color: var(--main-color); margin-bottom: 20px;">>> ACADEMIC WORK</h3>
-                
-                <h4 style="color: var(--main-color); margin-bottom: 10px; font-size: 12px;">Max Script (<a href="#" id="link-uni-projects" target="_blank" style="color: var(--link-blue); text-decoration: none;">Watch Video</a>):</h4>
-                <ul>
-                    <li>Using max script, made a city spawner and spawns buildings into predetermined locations and has multiple resets so you can choose a variety of buildings that are stored in an array to be spawned from a drop down menu. The building spawned will be randomised amounts and in random locations so you can regenerate them again if you hate the location.</li>
-                    <li>Add a drop-down menu to change the colours of cars and trucks in the city with the same mechanic as the buildings</li>
-                    <li>Changed Godzilla texture to from a top-down menu to multiple texture presets</li>
-                </ul>
-                
-                <h4 style="color: var(--main-color); margin-top: 25px; margin-bottom: 10px; font-size: 12px;">Tower Defence Game:</h4>
-                <ul>
-                    <li>Learnt how to use object pooler to spawn bullets and enemies.</li>
-                    <li>Learnt how to use waypoints to make paths.</li>
-                    <li>Learnt how to use game managers to handle multiple functions.</li>
-                    <li>Made 2 levels with multiple paths</li>
-                    <li>Made a tower that shoots glue to slow down enemies</li>
-                    <li>Added different types of that requires certain towers to target them</li>
-                    <li>Made in Unity</li>
-                </ul>
-                
-                <h4 style="color: var(--main-color); margin-top: 25px; margin-bottom: 10px; font-size: 12px;">Virtual Reality Game:</h4>
-                <ul>
-                    <li>Added ai characters in the game with convai where players can interact with</li>
-                    <li>Added a timer that teleports the player to the next level</li>
-                    <li>Added a car spawner to simulate simple traffic on a highway by instantiating a bunch of car prefabs</li>
-                    <li>Added day night cycle by moving the skybox and also swapping the texture of it</li>
-                    <li>Made main map which is a city and an apartment and start level map which is a bar</li>
-                </ul>
-            </div>
-
-        </div>
-    </section>
-
-    <div class="section-divider"></div>
-
-    <!-- EXTRAS (EDUCATION & ART TOOLS) -->
-    <section id="extras">
-        <h2 class="section-title">
-            <span>🎓</span> EXTRAS
-        </h2>
-        <div class="projects-grid">
-            
-            <div class="box">
-                <h3 style="color: var(--main-color); margin-bottom: 20px;">>> ASIA PACIFIC UNIVERSITY (2023-2025)</h3>
-                <p style="margin-bottom: 15px;">
-                Pursuing a degree in Bcs Computer Science in Games Development.</p>
-                <p style="margin-bottom: 15px;"><strong style="color: var(--main-color);">Subjects learnt:</strong></p>
-                <ul style="padding-left: 20px; margin-bottom: 25px; color: var(--text-dim); list-style-type: square;">
-                    <li style="margin-bottom: 5px;">Computer Games High Concept</li>
-                    <li style="margin-bottom: 5px;">Basic 3d Computer Character Modelling</li>
-                    <li style="margin-bottom: 5px;">Game Engines</li>
-                    <li style="margin-bottom: 5px;">Analogue Games</li>
-                    <li style="margin-bottom: 5px;">Imaging and Special Effects</li>
-                    <li style="margin-bottom: 5px;">Computer Graphics</li>
-                    <li style="margin-bottom: 5px;">Believable Models for Game and Virtual Reality</li>
-                    <li style="margin-bottom: 5px;">Mathematics for Computer Graphics</li>
-                    <li style="margin-bottom: 5px;">Programming For Data Analysis</li>
-                    <li style="margin-bottom: 5px;">Computer Games Design: Production and Testing</li>
-                    <li style="margin-bottom: 5px;">Mathematical Concept for Computing</li>
-                    <li style="margin-bottom: 5px;">Computer Games Level Design</li>
-                    <li style="margin-bottom: 5px;">Computer Games Design Documentation</li>
-                    <li style="margin-bottom: 5px;">Introduction to Object Oriented Programming</li>
-                    <li style="margin-bottom: 5px;">Programming with Python</li>
-                    <li style="margin-bottom: 5px;">Introduction to Graphics and Basic 3D Applications</li>
-                </ul>
-                
-                <h3 style="color: var(--main-color); margin-bottom: 15px;">>> 3D & DIGITAL ART TOOLS</h3>
-                <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                    <span style="border: 1px solid var(--main-color); padding: 8px 12px; font-size: 10px; color: var(--main-color);">BLENDER</span>
-                    <span style="border: 1px solid var(--main-color); padding: 8px 12px; font-size: 10px; color: var(--main-color);">3DS MAX</span>
-                    <span style="border: 1px solid var(--main-color); padding: 8px 12px; font-size: 10px; color: var(--main-color);">ZBRUSH</span>
-                    <span style="border: 1px solid var(--main-color); padding: 8px 12px; font-size: 10px; color: var(--main-color);">ADOBE SUBSTANCE PAINTER</span>
-                    <span style="border: 1px solid var(--main-color); padding: 8px 12px; font-size: 10px; color: var(--main-color);">ADOBE PHOTOSHOP</span>
+                <button class="collapsible-btn">
+                    <div class="btn-text-content">
+                        <h3>>> MAXSCRIPT & TOOLS (BEGINNER)</h3>
+                        <p class="overview-text">Created custom procedural environment generators and dynamic rendering tools.</p>
+                    </div>
+                    <span class="toggle-icon">V</span>
+                </button>
+                <div class="collapsible-content">
+                    <ul>
+                        <li><strong>Procedural Tool Development:</strong> Engineered custom procedural environment generators capable of dynamically spawning city elements such as buildings and vehicles into predetermined locations.</li>
+                        <li><strong>Data Structures & Logic:</strong> Utilized array-based logic to store, manage, and randomize structural elements, locations, and texture presets.</li>
+                        <li><strong>UI Integration & Customization:</strong> Developed custom drop-down menus within the tool's UI to allow real-time color and texture swapping (e.g., modifying car and truck colors, or swapping character textures to multiple presets). Implemented reset functionality allowing users to regenerate randomized amounts and locations of spawned entities on demand to iterate on level layouts.</li>
+                    </ul>
                 </div>
             </div>
 
@@ -805,28 +1034,334 @@
 
     <div class="section-divider"></div>
 
-    <!-- CONTINUE -->
+     <section id="games">
+        <h2 class="section-title">
+            <span>📺</span> GAMES
+        </h2>
+        <div class="projects-grid">
+
+            <div class="box project-card">
+                <button class="collapsible-btn">
+                    <div class="btn-text-content">
+                        <h3>>> SKY SLIME</h3>
+                        <p class="overview-text">3D platformer featuring a slime with dynamic glowing mechanics and environmental hazards.</p>
+                    </div>
+                    <span class="toggle-icon">V</span>
+                </button>
+                <div class="collapsible-content">
+                    <a href="#" id="link-sky-slime" class="game-link" target="_blank">>> VIEW ON ITCH.IO</a>
+                    <ul>
+                        <li>Made slime character with 3rd person character controller with blueprints</li>
+                        <li>Made a timer with C++ and blueprints</li>
+                        <li>Made a dynamic day and night cycle with blueprints</li>
+                        <li>Made block break platform that breaks when player encounters said platform</li>
+                        <li>Made character glow mechanic that swaps the texture of the slime to an emissive texture</li>
+                        <li>Added a death counter with blueprints</li>
+                        <li>Added start cutscene with blueprints</li>
+                        <li>Added a bunch of sound effects in the game from background music, character movement and ambience</li>
+                        <li>Added death magma block with blueprints</li>
+                        <li>Added level transporter which utilizes blueprint</li>
+                        <li>Added fireplace spawn point system with blueprints</li>
+                        <li>Made a ray casting object that needed to be hit that is constantly moving requiring skill from the player</li>
+                        <li>Added Ui, menu Ui, controls Ui, end screen Ui</li>
+                        <li>Made game level which includes the start level easy level, hard level and end</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="box project-card">
+                <button class="collapsible-btn">
+                    <div class="btn-text-content">
+                        <h3>>> THE LONG TAKE</h3>
+                        <p class="overview-text">2D action-platformer featuring fluid locomotion, melee combat, and dynamic blood effects.</p>
+                    </div>
+                    <span class="toggle-icon">V</span>
+                </button>
+                <div class="collapsible-content">
+                    <a href="#" id="link-the-long-take" class="game-link" target="_blank">>> VIEW ON ITCH.IO</a>
+                    <ul>
+                        <li>Lead Gameplay Programmer for a 2d platformer of a stuntman going through the motions dodging obstacles and weaving through enemies.</li>
+                        <li>Developed a robust 2D player controller utilizing Rigidbody2D and CapsuleCollider2D, integrating scalable mechanics for dashing, wall sliding, wall jumping, and melee combat, with built-in architecture for modular ability expansion like double jump.</li>
+                        <li>Used particle system to make blood effects whenever the layer dies or kills an enemy it will splatter blood everywhere. Also enabled collision on the particles so that it will stick to the floor. After a while the particle system will be disabled.</li>
+                        <li>Made a sound manager that can lay sounds randomised but also categorised. For example, if you want multiple melee sounds it calls the melee sound from an internal array that has multiple melee sfx. It's basically a bunch of arrays inside a dictionary.</li>
+                        <li>Made a bat enemy that moves up and down and looks at the player.</li>
+                        <li>Made a death screen that appears when the player dies and lays a sequential voice line that later than randomises it.</li>
+                        <li>Used shader graph to add a hollow knight like effect of the light of the player and a glow hurt material.</li>
+                        <li>Configured scene transition logic and trigger volumes to seamlessly route the player to the end credits sequence upon game completion.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="box project-card">
+                <button class="collapsible-btn">
+                    <div class="btn-text-content">
+                        <h3>>> SCRAPING ANGEL</h3>
+                        <p class="overview-text">First-person survival horror game with advanced 'Weeping Angel' style line-of-sight AI.</p>
+                    </div>
+                    <span class="toggle-icon">V</span>
+                </button>
+                <div class="collapsible-content">
+                    <a href="#" id="link-scraping-angel" class="game-link" target="_blank">>> VIEW ON ITCH.IO</a>
+                    <ul>
+                        <li>Lead Programmer for a 72-hour game jam, developing a first-person survival horror game featuring a detective pursued by a Weeping Angel-style entity.</li>
+                        <li>Programmed complex enemy AI utilizing Unity's AI Navigation package and NavMesh, featuring dynamic patrol routing and player-detection chase mechanics.</li>
+                        <li>Implemented line-of-sight logic, forcing the AI to freeze its movement whenever it is rendered within the player's camera view.</li>
+                        <li>Developed automated fail-safe routines to resolve AI pathfinding deadlocks and prevent the entity from getting stuck on environmental geometry.</li>
+                        <li>Configured a smooth, jitter-free player controller by integrating Unity's Character Controller with the Cinemachine package.</li>
+                        <li>Designed an object interaction system linked to the game's core objective and win state.</li>
+                        <li>Engineered a dynamic jumpscare sequence utilizing camera hierarchies, seamlessly integrated with a fail-state trigger that routes the player back to the main menu.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="box project-card">
+                <button class="collapsible-btn">
+                    <div class="btn-text-content">
+                        <h3>>> WELCOME BACK</h3>
+                        <p class="overview-text">2D pixel art adventure focused on urgent time-management and apartment tidying.</p>
+                    </div>
+                    <span class="toggle-icon">V</span>
+                </button>
+                <div class="collapsible-content">
+                    <a href="#" id="link-welcome-back" class="game-link" target="_blank">>> VIEW ON ITCH.IO</a>
+                    <ul>
+                        <li>Co-programmer on a 5-person team for a 48-hour game jam, developing a 2D pixel art adventure where the player must urgently tidy a messy apartment before an important guest arrives.</li>
+                        <li>Implemented physics-based 2D character locomotion utilizing Unity's Rigidbody2D component.</li>
+                        <li>Integrated character animation states and synchronized audio cues for footstep events.</li>
+                        <li>Engineered the core gameplay loop, developing a custom timer system that directly drives the game's win and loss conditions.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="box project-card">
+                <button class="collapsible-btn">
+                    <div class="btn-text-content">
+                        <h3>>> GROW A CITY</h3>
+                        <p class="overview-text">Resource management game featuring dual-perspective cameras and dynamic tile spawning.</p>
+                    </div>
+                    <span class="toggle-icon">V</span>
+                </button>
+                <div class="collapsible-content">
+                    <a href="#" id="link-grow-a-city" class="game-link" target="_blank">>> VIEW ON ITCH.IO</a>
+                    <ul>
+                        <li>Lead Programmer for a 48-hour game for a resource manager game for a city manager.</li>
+                        <li>Engineered a dual-perspective camera system using Cinemachine, enabling seamless transitions between a 3D first-person character controller and a strategic top-down tactical view.</li>
+                        <li>Developed a tile-based spawning system that generates environmental resources dynamically based on 2D UI input and predefined coordinate logic.</li>
+                        <li>Programmed a progressive "danger" mechanic within the tile system, utilizing time-based variables to increase hazard intensity as gameplay scales.</li>
+                        <li>Integrated Unity's Character Controller to provide responsive movement for the first-person avatar.</li>
+                        <li>Designed the underlying data architecture to synchronize 2D UI elements with 3D world space, ensuring accurate resource placement and management.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="box project-card">
+                <button class="collapsible-btn">
+                    <div class="btn-text-content">
+                        <h3>>> BLAST ROCK</h3>
+                        <p class="overview-text">2D top-down space shooter with highly optimized batch rendering and precise collisions.</p>
+                    </div>
+                    <span class="toggle-icon">V</span>
+                </button>
+                <div class="collapsible-content">
+                    <a href="#" id="link-blast-rock" class="game-link" target="_blank">>> VIEW ON ITCH.IO</a>
+                    <ul>
+                        <li>Developed a spaceship shooter game in python for a 1-week jam.</li>
+                        <li>Engineered a 2D top-down space shooter utilizing Object-Oriented Programming (OOP) principles in Python, creating modular classes for player, projectile, and enemy asteroid entities.</li>
+                        <li>Developed a responsive multi-directional character controller, integrating frame-rate independent physics (Delta Time) to ensure consistent movement and gameplay speed across varying hardware environments.</li>
+                        <li>Implemented a high-precision collision detection system utilizing Pygame-CE's FRect (floating-point rectangles) and pixel-perfect sprite masks, eliminating the positional rounding errors common in standard integer-based bounding boxes.</li>
+                        <li>Optimized the game loop and memory management by leveraging Pygame Sprite Groups to efficiently handle batch rendering, entity spawning, and collision tracking for high volumes of projectiles and enemies.</li>
+                        <li>Enhanced player experience by developing a real-time survival-tracking UI scoreboard and integrating dynamic audio feedback, including background music and synchronized sound effects for weapon firing and entity destruction.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="box project-card">
+                <button class="collapsible-btn">
+                    <div class="btn-text-content">
+                        <h3>>> ESCAPE THE PARKING LOT</h3>
+                        <p class="overview-text">First-person vehicular combat game with hostile pursuit AI and physics destruction.</p>
+                    </div>
+                    <span class="toggle-icon">V</span>
+                </button>
+                <div class="collapsible-content">
+                    <a href="#" id="link-escape-parking-lot" class="game-link" target="_blank">>> VIEW ON ITCH.IO</a>
+                    <ul>
+                        <li>Lead Programmer for a 48-hour game developing a first-person action game featuring physics-based vehicular combat and pursuit mechanics.</li>
+                        <li>Programmed hostile vehicle AI utilizing Unity's NavMesh, featuring dynamic pursuit routing and environmental combat logic that allows the player to bait enemies into fatal collisions.</li>
+                        <li>Implemented a physics-based weapon system that destroys vehicles, utilizing trigger collision detection logic to trigger instant destruction upon impact with environmental hazards.</li>
+                        <li>Engineered a dynamic spawner system to manage the instantiation and pacing of multiple pursuing AI enemies.</li>
+                        <li>Configured a first-person player controller by seamlessly integrating Unity's Character Controller with the Cinemachine package.</li>
+                        <li>Scripted a custom camera-state modifier utilizing Cinemachine that dynamically inverts the player's Y-axis mouse controls upon character death.</li>
+                        <li>Developed a robust respawn architecture, utilizing Y-axis boundary checks ("void catchers") to automatically catch and reset the player's transform if they fall out of bounds.</li>
+                        <li>Integrated spatial audio cues and sound effects for enemy vehicles to enhance player situational awareness and gameplay feedback.</li>
+                    </ul>
+                </div>
+            </div>
+
+             <div class="box project-card">
+                <button class="collapsible-btn">
+                    <div class="btn-text-content">
+                        <h3>>> PASSING OF THE GREAT WHITE</h3>
+                        <p class="overview-text">Mystery visual novel utilizing dynamic typography and custom scene transitions.</p>
+                    </div>
+                    <span class="toggle-icon">V</span>
+                </button>
+                <div class="collapsible-content">
+                    <a href="#" id="link-passing-great-white" class="game-link" target="_blank">>> VIEW ON ITCH.IO</a>
+                    <ul>
+                        <li>Gameplay Programmer for a mystery visual novel centered on a father and daughter moving to a strange new town.</li>
+                        <li>Developed a dynamic dialogue system featuring interactive text boxes and sequential progression controls.</li>
+                        <li>Programmed custom scene and character transition scripts to handle smooth fade-in and fade-out visual effects.</li>
+                        <li>Utilized TextMeshPro to implement animated, pop-in typography for enhanced narrative delivery.</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section id="uni-projects">
+        <h2 class="section-title">
+            <span>🏫</span> UNIVERSITY PROJECTS
+        </h2>
+        <div class="projects-grid">
+            
+            <div class="box project-card">
+                <button class="collapsible-btn">
+                    <div class="btn-text-content">
+                        <h3>>> ACADEMIC WORK</h3>
+                        <p class="overview-text">Collection of coursework including procedural city generation, tower defense, and VR environments.</p>
+                    </div>
+                    <span class="toggle-icon">V</span>
+                </button>
+                
+                <div class="collapsible-content">
+                    <h4 style="color: var(--main-color); margin-bottom: 10px; font-size: 12px;">Max Script (<a href="#" id="link-uni-projects" target="_blank" style="color: var(--link-blue); text-decoration: none;">Watch Video</a>):</h4>
+                    <ul>
+                        <li>Using max script, made a city spawner and spawns buildings into predetermined locations and has multiple resets so you can choose a variety of buildings that are stored in an array to be spawned from a drop down menu. The building spawned will be randomised amounts and in random locations so you can regenerate them again if you hate the location.</li>
+                        <li>Add a drop-down menu to change the colours of cars and trucks in the city with the same mechanic as the buildings</li>
+                        <li>Changed Godzilla texture to from a top-down menu to multiple texture presets</li>
+                    </ul>
+                    
+                    <h4 style="color: var(--main-color); margin-top: 25px; margin-bottom: 10px; font-size: 12px;">Tower Defence Game:</h4>
+                    <ul>
+                        <li>Learnt how to use object pooler to spawn bullets and enemies.</li>
+                        <li>Learnt how to use waypoints to make paths.</li>
+                        <li>Learnt how to use game managers to handle multiple functions.</li>
+                        <li>Made 2 levels with multiple paths</li>
+                        <li>Made a tower that shoots glue to slow down enemies</li>
+                        <li>Added different types of that requires certain towers to target them</li>
+                        <li>Made in Unity</li>
+                    </ul>
+                    
+                    <h4 style="color: var(--main-color); margin-top: 25px; margin-bottom: 10px; font-size: 12px;">Virtual Reality Game:</h4>
+                    <ul>
+                        <li>Added ai characters in the game with convai where players can interact with</li>
+                        <li>Added a timer that teleports the player to the next level</li>
+                        <li>Added a car spawner to simulate simple traffic on a highway by instantiating a bunch of car prefabs</li>
+                        <li>Added day night cycle by moving the skybox and also swapping the texture of it</li>
+                        <li>Made main map which is a city and an apartment and start level map which is a bar</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section id="extras">
+        <h2 class="section-title">
+            <span>🎓</span> EXTRAS
+        </h2>
+        <div class="projects-grid">
+            
+            <div class="box project-card">
+                <button class="collapsible-btn">
+                    <div class="btn-text-content">
+                        <h3>>> ASIA PACIFIC UNIVERSITY (2023-2025)</h3>
+                        <p class="overview-text">BSc in Computer Science (Games Development). Covering engine architecture, graphics, and gameplay.</p>
+                    </div>
+                    <span class="toggle-icon">V</span>
+                </button>
+                <div class="collapsible-content">
+                    <p style="margin-bottom: 15px;">Pursuing a degree in Bcs Computer Science in Games Development.</p>
+                    <p style="margin-bottom: 15px;"><strong style="color: var(--main-color);">Subjects learnt:</strong></p>
+                    <ul style="padding-left: 20px; margin-bottom: 25px; color: var(--text-dim); list-style-type: square;">
+                        <li style="margin-bottom: 5px;">Computer Games High Concept</li>
+                        <li style="margin-bottom: 5px;">Basic 3d Computer Character Modelling</li>
+                        <li style="margin-bottom: 5px;">Game Engines</li>
+                        <li style="margin-bottom: 5px;">Analogue Games</li>
+                        <li style="margin-bottom: 5px;">Imaging and Special Effects</li>
+                        <li style="margin-bottom: 5px;">Computer Graphics</li>
+                        <li style="margin-bottom: 5px;">Believable Models for Game and Virtual Reality</li>
+                        <li style="margin-bottom: 5px;">Mathematics for Computer Graphics</li>
+                        <li style="margin-bottom: 5px;">Programming For Data Analysis</li>
+                        <li style="margin-bottom: 5px;">Computer Games Design: Production and Testing</li>
+                        <li style="margin-bottom: 5px;">Mathematical Concept for Computing</li>
+                        <li style="margin-bottom: 5px;">Computer Games Level Design</li>
+                        <li style="margin-bottom: 5px;">Computer Games Design Documentation</li>
+                        <li style="margin-bottom: 5px;">Introduction to Object Oriented Programming</li>
+                        <li style="margin-bottom: 5px;">Programming with Python</li>
+                        <li style="margin-bottom: 5px;">Introduction to Graphics and Basic 3D Applications</li>
+                    </ul>
+                    
+                    <h3 style="color: var(--main-color); margin-bottom: 15px;">>> 3D & DIGITAL ART TOOLS</h3>
+                    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                        <span style="border: 1px solid var(--main-color); padding: 8px 12px; font-size: 10px; color: var(--main-color);">BLENDER</span>
+                        <span style="border: 1px solid var(--main-color); padding: 8px 12px; font-size: 10px; color: var(--main-color);">3DS MAX</span>
+                        <span style="border: 1px solid var(--main-color); padding: 8px 12px; font-size: 10px; color: var(--main-color);">ZBRUSH</span>
+                        <span style="border: 1px solid var(--main-color); padding: 8px 12px; font-size: 10px; color: var(--main-color);">ADOBE SUBSTANCE PAINTER</span>
+                        <span style="border: 1px solid var(--main-color); padding: 8px 12px; font-size: 10px; color: var(--main-color);">ADOBE PHOTOSHOP</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
     <section id="continue">
         <h2 class="section-title">
             <span>❓</span> CONTINUE?
         </h2>
-        <div class="box contact-box">
-            <p>READY TO TEAM UP? INSERT COIN OR CLICK BELOW.</p>
-            
-            <div class="dot-container" style="margin-top: 40px; margin-bottom: 40px;">
-                <div class="deco-dot"></div>
-                <div class="deco-dot"></div>
-                <div class="deco-dot"></div>
-                <div class="deco-dot"></div>
-            </div>
+        
+        <div class="end-portal-wrapper">
+            <div class="portal-grid">
+                
+                <div id="end-portal-void" class="portal-center">
+                    <div class="portal-content">
+                        <p>READY TO TEAM UP?<br>JUMP IN.</p>
+                        <div class="btn-container">
+                            <a href="#" id="link-itch-io" class="btn" target="_blank">ITCH.IO</a>
+                            <a href="#" id="link-artstation" class="btn" target="_blank">ARTSTATION</a>
+                            <a href="#" id="link-email" class="btn">EMAIL</a>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="btn-container">
-                <a href="#" id="link-itch-io" class="btn" target="_blank">ITCH.IO</a>
-                <a href="#" id="link-artstation" class="btn" target="_blank">ARTSTATION</a>
-                <!-- <a href="#" id="link-github" class="btn" target="_blank">GITHUB</a> -->
-                <a href="#" id="link-email" class="btn">EMAIL</a>
+                <div class="end-portal-frame top-row f-top-1"><div class="eye-of-ender"></div></div>
+                <div class="end-portal-frame top-row f-top-2"><div class="eye-of-ender"></div></div>
+                <div class="end-portal-frame top-row f-top-3"><div class="eye-of-ender"></div></div>
+
+                <div class="end-portal-frame left-col f-left-1"><div class="eye-of-ender"></div></div>
+                <div class="end-portal-frame left-col f-left-2"><div class="eye-of-ender"></div></div>
+                <div class="end-portal-frame left-col f-left-3"><div class="eye-of-ender"></div></div>
+
+                <div class="end-portal-frame right-col f-right-1"><div class="eye-of-ender"></div></div>
+                <div class="end-portal-frame right-col f-right-2"><div class="eye-of-ender"></div></div>
+                <div class="end-portal-frame right-col f-right-3"><div class="eye-of-ender"></div></div>
+
+                <div class="end-portal-frame f-bot-1"><div class="eye-of-ender"></div></div>
+                <div class="end-portal-frame f-bot-2"><div class="eye-of-ender"></div></div>
+                <div class="end-portal-frame f-bot-3"><div class="eye-of-ender"></div></div>
+
             </div>
         </div>
+
     </section>
 
     <footer>
