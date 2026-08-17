@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lakshman Narain Ragubathy | Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
     <script>
         const PORTFOLIO_LINKS = {
@@ -318,12 +319,20 @@
 
         .section-title {
             color: var(--main-color);
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             display: flex;
             align-items: center;
             gap: 15px;
             text-shadow: var(--neon-glow);
-            font-size: clamp(12px, 3vw, 18px);
+            font-size: clamp(14px, 3vw, 18px);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-left: 4px solid var(--main-color);
+            padding-left: 15px;
+        }
+
+        .section-title i {
+            font-size: 1.2em;
         }
 
         .box {
@@ -1006,7 +1015,7 @@
    
     <section id="player">
         <h2 class="section-title">
-            <span>👾</span> PLAYER SELECT
+            <i class="fas fa-user"></i> >> ABOUT ME
         </h2>
         <div class="box player-content">
             <div class="avatar-box">
@@ -1015,9 +1024,9 @@
             <div class="player-stats">
   
                 <h2>LAKSHMAN NARAIN RAGUBATHY</h2>
-                <p>Aspiring Gameplay Programmer heavily focused on writing tight code and building engaging mechanics.
-                Specializing in C#, C++, and Python to drive gameplay loops, AI, and systems.
-                Ready to teleport into the next big project.</p>
+                <p>A dedicated AI and Gameplay Programmer focused on architecting robust systems and highly engaging game mechanics. 
+                Proficient in C#, C++, and Python, with a strong emphasis on scalable gameplay loops, complex artificial intelligence, and optimized performance. 
+                Actively seeking opportunities to contribute technical expertise to innovative development teams.</p>
             </div>
         </div>
     </section>
@@ -1026,7 +1035,7 @@
 
     <section id="software">
         <h2 class="section-title">
-            <span>⚡</span> SOFTWARE
+            <i class="fas fa-cog"></i> >> TECHNICAL SKILLS
         </h2>
         <div class="projects-grid">
             
@@ -1138,7 +1147,7 @@
 
      <section id="games">
         <h2 class="section-title">
-            <span>📺</span> GAMES
+            <i class="fas fa-gamepad"></i> >> GAME PROJECTS
         </h2>
         <div class="projects-grid">
 
@@ -1375,7 +1384,7 @@
 
     <section id="uni-projects">
         <h2 class="section-title">
-            <span>🏫</span> UNIVERSITY PROJECTS
+            <i class="fas fa-graduation-cap"></i> >> ACADEMIC PROJECTS
         </h2>
         <div class="projects-grid">
             
@@ -1434,8 +1443,7 @@
 
     <section id="extras">
         <h2 class="section-title">
-        
-            <span>🎓</span> EXTRAS
+            <i class="fas fa-star"></i> >> ADDITIONAL SKILLS
         </h2>
         <div class="projects-grid">
             
@@ -1493,8 +1501,7 @@
 
     <section id="continue">
         <h2 class="section-title">
-            <span>👁️</span> THROW AN EYE
- 
+            <i class="fas fa-address-book"></i> >> CONNECT
         </h2>
         
         <div class="end-portal-wrapper">
