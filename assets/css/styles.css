@@ -1,0 +1,1049 @@
+/* =========================================
+   Global Variables & Reset
+   ========================================= */
+:root {
+  --bg-color: #050505;
+  --bg-secondary: #0a0a0f;
+  --main-color: #ff007f;
+  --main-color-rgb: 255, 0, 127;
+  --accent-color: #00d4ff;
+  --accent-color-rgb: 0, 212, 255;
+  --text-dim: #c8c8d0;
+  --text-bright: #ffffff;
+  --text-muted: #666680;
+  --neon-glow: 0 0 8px rgba(255, 0, 127, 0.6);
+  --blue-glow: 0 0 8px rgba(0, 212, 255, 0.6);
+  --glass-bg: rgba(10, 10, 20, 0.7);
+  --glass-border: rgba(255, 0, 127, 0.15);
+  --card-radius: 12px;
+  
+  /* End Portal Colors */
+  --end-stone: #dfebaa;
+  --end-stone-dark: #c1d185;
+  --frame-dark: #12332e;
+  --frame-light: #2c7a6b;
+  --hole: #0a1714;
+  --eye-base: #0f2e1b;
+  --eye-core: #1c5230;
+  --eye-pupil: #2db85c;
+  --eye-dark: #06120a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-bright);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: var(--main-color);
+  color: var(--text-bright);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--main-color);
+  border-radius: 3px;
+}
+
+/* =========================================
+   Typography
+   ========================================= */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: bold;
+}
+
+/* =========================================
+   Background Layers
+   ========================================= */
+#void-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at center, rgba(255,0,127,0.08) 0%, #050505 60%);
+  z-index: -3;
+  pointer-events: none;
+}
+
+#hero-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -2;
+  pointer-events: none;
+}
+
+#particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.ender-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background-color: var(--main-color);
+  box-shadow: var(--neon-glow);
+  border-radius: 50%;
+  animation: float-and-fade 3s ease-in-out infinite;
+}
+
+/* =========================================
+   Burst Particles (Click Effect)
+   ========================================= */
+.burst-particle {
+  position: fixed;
+  width: 5px;
+  height: 5px;
+  background-color: var(--main-color);
+  box-shadow: var(--neon-glow);
+  border-radius: 1px;
+  pointer-events: none;
+  z-index: 9999;
+  animation: particleFade 1.4s ease-out forwards;
+}
+
+/* =========================================
+   Container & Layout
+   ========================================= */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 5vw, 60px);
+}
+
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--main-color), transparent);
+  margin: 60px 0;
+  opacity: 0.5;
+}
+
+/* =========================================
+   Navigation Bar
+   ========================================= */
+.nav-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(5, 5, 5, 0.85);
+  border-bottom: 1px solid var(--glass-border);
+  padding: 15px 0;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  transition: all 0.3s;
+}
+
+.nav-bar.scrolled {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.nav-bar a {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 8px 18px;
+  border-radius: 6px;
+  transition: all 0.3s;
+  position: relative;
+}
+
+.nav-bar a:hover {
+  color: var(--main-color);
+  text-shadow: var(--neon-glow);
+}
+
+.nav-bar a.active {
+  color: var(--main-color);
+  background: rgba(255, 0, 127, 0.1);
+  text-shadow: var(--neon-glow);
+}
+
+/* =========================================
+   Hero / Header Section
+   ========================================= */
+header {
+  text-align: center;
+  padding-top: 100px;
+  padding-bottom: 60px;
+  position: relative;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-enderman-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+  animation: hoverFloat 4s ease-in-out infinite;
+  position: relative;
+}
+
+.big-enderman {
+  width: 140px;
+  height: 140px;
+  border: 4px solid #111;
+  background-color: #000;
+  position: relative;
+}
+
+.enderman {
+  width: 80px;
+  height: 80px;
+  background: #111;
+  border: 2px solid #222;
+  position: relative;
+}
+
+.big-enderman::before, .big-enderman::after,
+.enderman::before, .enderman::after {
+  content: '';
+  position: absolute;
+  background-color: var(--main-color);
+  box-shadow: 0 0 10px var(--main-color), 0 0 20px var(--main-color);
+  animation: eyesPulse 2s infinite alternate;
+}
+
+/* Eyes positioning for big enderman */
+.big-enderman::before { top: 60px; left: 15px; width: 30px; height: 10px; }
+.big-enderman::after { top: 60px; right: 15px; width: 30px; height: 10px; }
+
+/* Eyes positioning for regular enderman */
+.enderman::before { top: 40px; left: 5px; width: 22px; height: 8px; }
+.enderman::after { top: 40px; right: 5px; width: 22px; height: 8px; }
+
+.eye-glow-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,0,127,0.3) 0%, transparent 70%);
+  animation: eyePulse 3s infinite alternate;
+  z-index: -1;
+  pointer-events: none;
+}
+
+h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(24px, 5vw, 48px);
+  font-weight: 700;
+  color: white;
+  letter-spacing: -1px;
+  margin-bottom: 12px;
+  text-shadow: 0 0 40px rgba(255, 0, 127, 0.3);
+}
+
+.subtitle {
+  font-family: 'Press Start 2P', cursive;
+  font-size: clamp(8px, 1.5vw, 11px);
+  color: var(--main-color);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-shadow: var(--neon-glow);
+}
+
+.hero-tagline {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(13px, 2vw, 16px);
+  color: var(--text-dim);
+  max-width: 600px;
+  margin: 20px auto 0;
+  line-height: 1.6;
+}
+
+/* Pacman Animation */
+.arcade-animation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-top: 25px;
+  flex-wrap: wrap;
+}
+
+.pacman {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  margin: 0;
+}
+
+.pacman::before, .pacman::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30px;
+  height: 15px;
+  background: #ffcc00;
+  border-radius: 30px 30px 0 0;
+  transform-origin: bottom center;
+  animation: chomp-top 0.3s ease-in-out infinite alternate;
+}
+
+.pacman::after {
+  top: 15px;
+  border-radius: 0 0 30px 30px;
+  transform-origin: top center;
+  animation: chomp-bottom 0.3s ease-in-out infinite alternate;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--main-color);
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255, 0, 127, 0.8);
+  animation: pulse 1s infinite alternate;
+}
+
+.arcade-animation .dot:nth-child(2) { animation-delay: 0.2s; }
+.arcade-animation .dot:nth-child(3) { animation-delay: 0.4s; }
+.arcade-animation .dot:nth-child(4) { animation-delay: 0.6s; }
+
+/* =========================================
+   Section Titles
+   ========================================= */
+.section-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(18px, 3vw, 26px);
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 35px;
+  position: relative;
+}
+
+.section-title::before {
+  content: '';
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(to bottom, var(--main-color), var(--accent-color));
+  border-radius: 2px;
+  position: absolute;
+  left: -15px;
+}
+
+.section-title i {
+  color: var(--main-color);
+  font-size: 0.8em;
+}
+
+.section-label {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 9px;
+  color: var(--main-color);
+  letter-spacing: 2px;
+  display: block;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+
+/* =========================================
+   Glass Cards (.box)
+   ========================================= */
+.box {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--card-radius);
+  padding: 30px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  position: relative;
+}
+
+.box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--main-color), transparent);
+  opacity: 0.5;
+}
+
+.box:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 0, 127, 0.3);
+  box-shadow: 0 20px 60px rgba(255, 0, 127, 0.15), 0 0 30px rgba(255, 0, 127, 0.05);
+}
+
+/* =========================================
+   Projects Grid & Cards
+   ========================================= */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+  gap: 25px;
+}
+
+/* 3D Card Tilt Effect */
+.tilt-card {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  transition: transform 0.1s ease-out;
+}
+
+.tilt-card .tilt-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--card-radius);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.tilt-card:hover .tilt-glare {
+  opacity: 1;
+}
+
+/* Collapsible / Accordion */
+.collapsible-btn {
+  background: none;
+  border: none;
+  color: white;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font-family: 'Space Grotesk', sans-serif;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 15px;
+  padding: 0;
+  transition: all 0.3s;
+}
+
+.btn-text-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex-grow: 1;
+}
+
+.collapsible-btn h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(14px, 2.5vw, 18px);
+  font-weight: 600;
+  color: white;
+  margin: 0;
+  line-height: 1.4;
+  transition: color 0.3s;
+}
+
+.overview-text {
+  font-family: 'Inter', sans-serif;
+  color: var(--text-muted);
+  font-size: clamp(12px, 1.5vw, 14px);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.collapsible-btn:hover h3 {
+  color: var(--main-color);
+}
+
+.collapsible-btn:hover .overview-text {
+  color: var(--text-dim);
+}
+
+.toggle-icon {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 12px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  transition: all 0.3s;
+  transform: rotate(0deg);
+}
+
+.toggle-icon.rotated {
+  transform: rotate(180deg);
+  color: var(--main-color);
+}
+
+.collapsible-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.3s;
+  opacity: 0;
+}
+
+.collapsible-content.active {
+  max-height: 2000px;
+  opacity: 1;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 0, 127, 0.15);
+}
+
+/* Project Card Content */
+.project-card ul {
+  padding-left: 20px;
+  font-family: 'Inter', sans-serif;
+  color: var(--text-dim);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.project-card li {
+  margin-bottom: 12px;
+}
+
+.project-card li::marker {
+  color: var(--main-color);
+}
+
+.project-card strong {
+  color: var(--accent-color);
+  font-weight: 600;
+  display: block;
+  margin-bottom: 4px;
+  font-size: 13px;
+}
+
+.game-link {
+  color: var(--accent-color);
+  text-decoration: none;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 6px;
+  transition: all 0.3s;
+  margin-bottom: 15px;
+}
+
+.game-link:hover {
+  background: rgba(0, 212, 255, 0.1);
+  border-color: var(--accent-color);
+  box-shadow: var(--blue-glow);
+}
+
+.game-link::before {
+  content: '▸';
+}
+
+/* =========================================
+   About / Player Section
+   ========================================= */
+.player-content {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+.avatar-box {
+  border: 2px solid rgba(255, 0, 127, 0.3);
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.player-stats h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  color: white;
+  font-size: clamp(16px, 3vw, 22px);
+  margin-bottom: 15px;
+}
+
+.player-stats p {
+  font-family: 'Inter', sans-serif;
+  color: var(--text-dim);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+/* Skill Tags */
+.skill-tags {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+.skill-tag {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 8px;
+  padding: 8px 14px;
+  border: 1px solid var(--main-color);
+  color: var(--main-color);
+  border-radius: 4px;
+  background: rgba(255, 0, 127, 0.05);
+  transition: all 0.3s;
+}
+
+.skill-tag:hover {
+  background: rgba(255, 0, 127, 0.15);
+  box-shadow: var(--neon-glow);
+}
+
+/* =========================================
+   End Portal Section (IMPROVED 3D VERSION)
+   ========================================= */
+.end-portal-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 60px 0;
+  perspective: 800px;
+}
+
+.portal-grid {
+  --px: clamp(3px, 1.2vw, 7px);
+  display: grid;
+  grid-template-columns: repeat(5, calc(var(--px) * 16));
+  grid-template-rows: repeat(5, calc(var(--px) * 16));
+  gap: calc(var(--px) * 0.3);
+  transform: rotateX(25deg);
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease;
+  animation: portalFloat 6s ease-in-out infinite;
+}
+
+.portal-grid:hover {
+  transform: rotateX(5deg) scale(1.05);
+}
+
+.portal-center {
+  grid-column: 2 / 5;
+  grid-row: 2 / 5;
+  background: #010002;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    inset 0 0 0 calc(var(--px) * 2) rgba(0, 0, 0, 0.9), 
+    inset 0 0 calc(var(--px) * 20) calc(var(--px) * 12) rgba(100, 0, 200, 0.3), 
+    0 0 60px rgba(100, 0, 200, 0.2), 
+    0 0 120px rgba(100, 0, 200, 0.1);
+  transform: translateZ(30px);
+}
+
+.end-portal-frame {
+  background: 
+    linear-gradient(45deg, var(--end-stone-dark) 25%, transparent 25%) -50px 0,
+    linear-gradient(-45deg, var(--end-stone-dark) 25%, transparent 25%) -50px 0,
+    linear-gradient(45deg, transparent 75%, var(--end-stone-dark) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--end-stone-dark) 75%);
+  background-color: var(--end-stone);
+  background-size: calc(var(--px)*4) calc(var(--px)*4);
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 
+    inset calc(var(--px)*2) calc(var(--px)*2) 0 var(--frame-light),
+    inset calc(var(--px)*-2) calc(var(--px)*-2) 0 var(--frame-dark),
+    0 4px 15px rgba(0,0,0,0.5);
+  transform: translateZ(10px);
+}
+
+.end-portal-frame::before {
+  content: '';
+  position: absolute;
+  width: calc(var(--px) * 6);
+  height: calc(var(--px) * 6);
+  background-color: var(--hole);
+  box-shadow: inset 0 0 calc(var(--px)*2) rgba(0,0,0,0.8);
+}
+
+.end-portal-frame.top-row { transform: rotate(180deg) translateZ(10px); }
+.end-portal-frame.right-col { transform: rotate(-90deg) translateZ(10px); }
+.end-portal-frame.left-col { transform: rotate(90deg) translateZ(10px); }
+
+.f-top-1 { grid-column: 2; grid-row: 1; }
+.f-top-2 { grid-column: 3; grid-row: 1; }
+.f-top-3 { grid-column: 4; grid-row: 1; }
+
+.f-bot-1 { grid-column: 2; grid-row: 5; }
+.f-bot-2 { grid-column: 3; grid-row: 5; }
+.f-bot-3 { grid-column: 4; grid-row: 5; }
+
+.f-left-1 { grid-column: 1; grid-row: 2; }
+.f-left-2 { grid-column: 1; grid-row: 3; }
+.f-left-3 { grid-column: 1; grid-row: 4; }
+
+.f-right-1 { grid-column: 5; grid-row: 2; }
+.f-right-2 { grid-column: 5; grid-row: 3; }
+.f-right-3 { grid-column: 5; grid-row: 4; }
+
+.eye-of-ender {
+  width: calc(var(--px) * 8);
+  height: calc(var(--px) * 8);
+  background: radial-gradient(circle at 30% 30%, var(--eye-pupil) 10%, var(--eye-core) 40%, var(--eye-base) 80%, var(--eye-dark) 100%);
+  border: calc(var(--px)*1) solid var(--eye-dark);
+  position: absolute;
+  z-index: 2;
+  animation: eyePulseSteady 2s infinite alternate;
+  box-shadow: 0 0 calc(var(--px)*3) var(--eye-pupil);
+}
+
+.portal-star {
+  position: absolute;
+  width: calc(var(--px) * 2);
+  height: calc(var(--px) * 2);
+  background: rgba(180, 0, 255, 0.8);
+  border-radius: 50%;
+  animation: portalPan 4s linear infinite;
+}
+
+.portal-content {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+.portal-content p {
+  font-family: 'Space Grotesk', sans-serif;
+  color: white;
+  text-shadow: 0 0 20px rgba(100, 0, 200, 0.5);
+  font-size: clamp(10px, 1.8vw, 14px);
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.portal-content .btn-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 80%;
+  max-width: 200px;
+}
+
+.portal-content .btn {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  border-color: var(--main-color);
+  padding: 10px 15px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: clamp(7px, 1.2vw, 9px);
+}
+
+/* =========================================
+   General Buttons
+   ========================================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid var(--main-color);
+  padding: 12px 24px;
+  color: var(--main-color);
+  text-decoration: none;
+  font-family: 'Press Start 2P', cursive;
+  font-size: clamp(9px, 1.5vw, 11px);
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 6px;
+  transition: all 0.3s;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.btn:hover {
+  background: var(--main-color);
+  color: #000;
+  box-shadow: 0 0 20px rgba(255, 0, 127, 0.4);
+  transform: translateY(-2px);
+}
+
+/* =========================================
+   Scroll Reveal Animations
+   ========================================= */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.reveal-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.reveal-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.reveal-scale.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* =========================================
+   Pulsing Dots (Decorative)
+   ========================================= */
+.dot-container {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.deco-dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--main-color);
+  border-radius: 50%;
+  box-shadow: var(--neon-glow);
+  animation: pulse 2s infinite alternate;
+}
+
+.deco-dot:nth-child(2) { animation-delay: 0.2s; }
+.deco-dot:nth-child(3) { animation-delay: 0.4s; }
+.deco-dot:nth-child(4) { animation-delay: 0.6s; }
+
+/* =========================================
+   Utility Classes
+   ========================================= */
+.sub-heading {
+  font-family: 'Space Grotesk', sans-serif;
+  color: var(--main-color);
+  margin-top: 25px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.inline-link {
+  color: var(--accent-color);
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.inline-link:hover {
+  text-shadow: var(--blue-glow);
+}
+
+.subject-list {
+  padding-left: 20px;
+  color: var(--text-dim);
+  list-style-type: square;
+  margin-bottom: 25px;
+  font-size: 13px;
+}
+
+.subject-list li {
+  margin-bottom: 5px;
+}
+
+.subject-list li::marker {
+  color: var(--main-color);
+}
+
+/* =========================================
+   Footer
+   ========================================= */
+footer {
+  margin-top: 80px;
+  text-align: center;
+  padding: 30px 0;
+  border-top: 1px solid var(--glass-border);
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* =========================================
+   Responsive Breakpoints
+   ========================================= */
+@media (max-width: 768px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .player-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .nav-bar {
+    gap: 4px;
+  }
+  
+  .nav-bar a {
+    font-size: 7px;
+    padding: 6px 12px;
+  }
+  
+  header {
+    padding-top: 80px;
+  }
+  
+  .portal-grid {
+    --px: clamp(2px, 1vw, 5px);
+  }
+  
+  .box {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-bar a {
+    font-size: 6px;
+    padding: 5px 8px;
+  }
+  
+  .projects-grid {
+    gap: 15px;
+  }
+}
+
+/* =========================================
+   Keyframe Animations
+   ========================================= */
+@keyframes twinkle {
+  0% { opacity: var(--a, 0.5); transform: scale(1); }
+  100% { opacity: 1; transform: scale(1.6); }
+}
+
+@keyframes pulse {
+  0% { opacity: 0.2; transform: scale(0.7); }
+  100% { opacity: 1; transform: scale(1.3); }
+}
+
+@keyframes hoverFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes eyePulse {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+  100% { transform: translate(-50%, -50%) scale(1.5); opacity: 1; }
+}
+
+@keyframes eyesPulse {
+  0% { box-shadow: 0 0 5px #e500ff; }
+  100% { box-shadow: 0 0 20px #e500ff, 0 0 30px #e500ff; }
+}
+
+@keyframes float-and-fade {
+  0% { transform: translateY(0) scale(0.5); opacity: 0; }
+  20% { opacity: 0.8; }
+  50% { transform: translateY(-50px) scale(1.2); opacity: 0.8; }
+  100% { transform: translateY(-100px) scale(0.5); opacity: 0; }
+}
+
+@keyframes particleFade {
+  0% { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--px), var(--py)) scale(0); opacity: 0; }
+}
+
+@keyframes chomp-top {
+  0% { transform: rotate(-40deg); }
+  100% { transform: rotate(0); }
+}
+
+@keyframes chomp-bottom {
+  0% { transform: rotate(40deg); }
+  100% { transform: rotate(0); }
+}
+
+@keyframes portalPan {
+  0% { transform: scale(0.5) translate(0, 0); opacity: 0; }
+  20% { opacity: 0.8; }
+  100% { transform: scale(1.5) translate(var(--dx, 20px), var(--dy, -20px)); opacity: 0; }
+}
+
+@keyframes eyePulseSteady {
+  0% { filter: drop-shadow(0 0 2px var(--eye-pupil)) brightness(1); }
+  100% { filter: drop-shadow(0 0 8px var(--eye-pupil)) brightness(1.3); }
+}
+
+@keyframes portalFloat {
+  0%, 100% { transform: rotateX(25deg) rotateZ(0deg) translateY(0); }
+  25% { transform: rotateX(28deg) rotateZ(1deg) translateY(-8px); }
+  50% { transform: rotateX(22deg) rotateZ(-1deg) translateY(-4px); }
+  75% { transform: rotateX(26deg) rotateZ(0.5deg) translateY(-10px); }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(-5px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
